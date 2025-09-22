@@ -149,6 +149,9 @@ features = ['dev', 'test', 'all']
 dependencies = [
 ]
 
+[tool.hatch.envs.default.env-vars]
+PYTEST_DISABLE_PLUGIN_AUTOLOAD = "1"
+
 # Commands available in the default environment
 [tool.hatch.envs.default.scripts]
 # Run tests with optional arguments
@@ -193,6 +196,9 @@ all = ["style", "typing", "fix"]
 # Dedicated environment for testing
 [tool.hatch.envs.test]
 features = ['test'] # Use test extras as dependencies
+
+[tool.hatch.envs.test.env-vars]
+PYTEST_DISABLE_PLUGIN_AUTOLOAD = "1"
 
 # Testing environment commands
 [tool.hatch.envs.test.scripts]

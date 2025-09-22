@@ -5,12 +5,12 @@ this_file: TODO.md
 # Vexy Markliff TODO
 
 ## Active Quality Sprint (Q1 2025)
-- [ ] Automate disabling of third-party pytest plugins so test runs require no manual environment overrides.
+- [x] Automate disabling of third-party pytest plugins so test runs require no manual environment overrides.
 
 ### Completed (2025-09-23)
 - Package initializer now re-exports `__version__`, `Config`, `process_data`, and `main`.
 - `process_data` exposes deterministic summary logic and CLI demo is aligned.
-- Pytest coverage expanded; documentation refreshed (WORK.md, CHANGELOG).
+- Pytest coverage expanded; documentation refreshed (WORK.md, CHANGELOG). Hatch environments set `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1` to keep runs deterministic.
 
 ## Phase 1: Foundation & Core Architecture
 
@@ -170,9 +170,6 @@ this_file: TODO.md
 - [ ] Add mypy
 
 ## Immediate Next Steps
-- [ ] Export package version from `vexy_markliff/__init__.py` so the public API exposes `__version__`, `Config`, and `process_data`.
-- [ ] Disable third-party pytest plugin auto-loading inside the test suite for deterministic runs.
-- [ ] Replace the placeholder `process_data` implementation with a simple normalization workflow and add unit coverage.
 - [ ] Run `uv add markdown-it-py mdit-py-plugins lxml fire pydantic rich`
 - [ ] Run `uv add --dev pytest pytest-cov pytest-mock ruff mypy`
 - [ ] Create basic project structure under `src/vexy_markliff/`

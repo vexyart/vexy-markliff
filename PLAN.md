@@ -48,9 +48,9 @@ Vexy Markliff is a Python package and Fire CLI tool for bidirectional conversion
 
 ## Immediate Quality Tasks
 
-1. **Automate pytest isolation** — Ensure third-party plugin auto-loading is disabled without requiring manual shell environment overrides.
-2. **Document standard test invocation** — Update developer docs to note the deterministic pytest command once automation lands.
-3. **Monitor summary logic coverage** — Add regression-focused tests as new edge cases emerge (e.g., numeric coercion, mixed whitespace inputs).
+1. **Automate pytest isolation** — Completed by configuring Hatch environments to export `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1`.
+2. **Document standard test invocation** — README now directs developers to `uvx hatch run test` as the default workflow.
+3. **Monitor summary logic coverage** — Ongoing; capture new edge cases as they arise during future development.
 
 ## Technical Architecture
 

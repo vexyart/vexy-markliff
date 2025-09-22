@@ -2,8 +2,8 @@
 """Core helpers for the vexy_markliff package."""
 # this_file: src/vexy_markliff/vexy_markliff.py
 
-from collections import Counter
 import logging
+from collections import Counter
 from dataclasses import dataclass
 from typing import Any
 

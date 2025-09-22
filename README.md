@@ -199,11 +199,14 @@ hatch run format
 ### Testing
 
 ```bash
-# Run all tests
-python -m pytest
+# Run all tests (preferred)
+uvx hatch run test
 
 # Run with coverage
-python -m pytest --cov=vexy_markliff
+uvx hatch run test-cov
+
+# Underlying command if hatch env already active
+python -m pytest
 
 # Run specific test file
 python -m pytest tests/test_markdown_parser.py
