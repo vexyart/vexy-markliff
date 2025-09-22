@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
-"""vexy_markliff:
+"""Core helpers for the vexy_markliff package."""
+# this_file: src/vexy_markliff/vexy_markliff.py
 
-Created by Fontlab Ltd
-"""
-
+from collections import Counter
 import logging
 from dataclasses import dataclass
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
-
-__version__ = "0.1.0"
+from typing import Any
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -18,46 +14,71 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class Config:
-    """Configuration settings for vexy_markliff."""
+    """Minimal configuration container used by ``process_data``."""
 
     name: str
     value: str | int | float
     options: dict[str, Any] | None = None
 
 
-def process_data(data: list[Any], config: Config | None = None, *, debug: bool = False) -> dict[str, Any]:
-    """Process the input data according to configuration.
+def process_data(
+    data: list[Any],
+    config: Config | None = None,
+    *,
+    debug: bool = False,
+) -> dict[str, Any]:
+    """Normalize list data and provide a lightweight summary."""
 
-    Args:
-        data: Input data to process
-        config: Optional configuration settings
-        debug: Enable debug mode
+    if not isinstance(data, list):
+        msg = "data must be provided as a list"
+        raise TypeError(msg)
 
-    Returns:
-        Processed data as a dictionary
-
-    Raises:
-        ValueError: If input data is invalid
-    """
+    original_level = logger.level
     if debug:
         logger.setLevel(logging.DEBUG)
         logger.debug("Debug mode enabled")
 
-    if not data:
-        msg = "Input data cannot be empty"
-        raise ValueError(msg)
+    try:
+        normalized: list[str] = []
+        for item in data:
+            text = str(item).strip()
+            if text:
+                normalized.append(text)
 
-    # TODO: Implement data processing logic
-    result: dict[str, Any] = {}
-    return result
+        if not normalized:
+            msg = "input data must contain at least one non-empty item"
+            raise ValueError(msg)
+
+        frequencies = Counter(normalized)
+        unique_count = len(frequencies)
+        result: dict[str, Any] = {
+            "items": normalized,
+            "summary": {"total": len(normalized), "unique": unique_count},
+            "count": len(normalized),
+            "unique": unique_count,
+            "frequency": dict(frequencies),
+        }
+
+        if config:
+            result["config"] = {
+                "name": config.name,
+                "value": config.value,
+                "options": config.options or {},
+            }
+
+        logger.debug("Processed data result: %s", result)
+        return result
+    finally:
+        if debug:
+            logger.setLevel(original_level)
 
 
 def main() -> None:
     """Main entry point for vexy_markliff."""
     try:
-        # Example usage
-        config = Config(name="default", value="test", options={"key": "value"})
-        result = process_data([], config=config)
+        config = Config(name="default", value="demo", options={"mode": "summary"})
+        sample_data = [" alpha ", "beta", "alpha"]
+        result = process_data(sample_data, config=config, debug=True)
         logger.info("Processing completed: %s", result)
 
     except Exception as e:

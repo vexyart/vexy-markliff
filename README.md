@@ -48,24 +48,14 @@ vexy-markliff md2xliff --mode=two-doc source.md target.md aligned.xlf
 ### Python API
 
 ```python
-from vexy_markliff import VexyMarkliff
+from vexy_markliff import Config, process_data
 
-# Initialize converter
-converter = VexyMarkliff()
-
-# Convert Markdown to XLIFF
-with open("document.md", "r") as f:
-    markdown_content = f.read()
-
-xliff_content = converter.markdown_to_xliff(
-    markdown_content,
-    source_lang="en",
-    target_lang="es"
+summary = process_data(
+    ["alpha", "beta", "alpha"],
+    config=Config(name="demo", value="count", options={"mode": "summary"}),
 )
 
-# Save XLIFF
-with open("document.xlf", "w") as f:
-    f.write(xliff_content)
+print(summary["unique"])  # -> 2
 ```
 
 ## Advanced Usage
