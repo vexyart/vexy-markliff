@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="en" sourcelanguage="de">
+  <!-- this_file: samsa.ts -->
+  <context>
+    <name>Kafka</name>
+    <message id="s1">
+      <source>Als Gregor Samsa eines Morgens aus unruhigen Träumen erwachte, fand er sich in seinem Bett zu einem ungeheueren Ungeziefer verwandelt.</source>
+      <translation>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin.</translation>
+    </message>
+    <message id="s2">
+      <source>Er lag auf seinem panzerartig harten Rücken und sah, wenn er den Kopf ein wenig hob, seinen gewölbten, braunen, von bogenförmigen Versteifungen geteilten Bauch, auf dessen Höhe sich die Bettdecke, zum gänzlichen Niedergleiten bereit, kaum noch erhalten konnte.</source>
+      <translation>He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment.</translation>
+    </message>
+    <message id="s3">
+      <source>Seine vielen, im Vergleich zu seinem sonstigen Umfang kläglich dünnen Beine flimmerten ihm hilflos vor den Augen.</source>
+      <translation>His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked.</translation>
+    </message>
+    <message id="s4">
+      <source>»Was ist mit mir geschehen?« dachte er.</source>
+      <translation>“What’s happened to me?” he thought.</translation>
+    </message>
+    <message id="s5">
+      <source>Es war kein Traum.</source>
+      <translation>It wasn’t a dream.</translation>
+    </message>
+    <message id="s6">
+      <source>Sein Zimmer, ein richtiges, nur etwas zu kleines Menschenzimmer, lag ruhig zwischen den vier wohlbekannten Wänden.</source>
+      <translation>His room, a proper human room although a little too small, lay peacefully between its four familiar walls.</translation>
+    </message>
+    <message id="s7">
+      <source>Über dem Tisch, auf dem eine auseinandergepackte Musterkollektion von Tuchwaren ausgebreitet war -- Samsa war Reisender --, hing das Bild, das er vor kurzem aus einer illustrierten Zeitschrift ausgeschnitten und in einem hübschen, vergoldeten Rahmen untergebracht hatte.</source>
+      <translation>A collection of textile samples lay spread out on the table—Samsa was a travelling salesman—and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame. It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer.</translation>
+    </message>
+  </context>
+</TS>
