@@ -1,198 +1,121 @@
-# 4. Additional HTML-XLIFF rules by Vexy Markliff
+---
+this_file: docs/512-prefs-html2.md
+---
 
-## 1. Additional HTML5 Elements
+# 4. HTML → XLIFF Structural Rules (Part 3)
 
-### 1.1. Ruby Annotations (East Asian Text)
+## Scope
+- Consolidates cross-cutting rules for attributes, namespaces, foreign content, and legacy tags.
+- Provides a complete lookup table covering every HTML5 element with references back to handling instructions in `docs/510-prefs-html0.md` and `docs/511-prefs-html1.md`.
 
-```
-ruby, rt, rp, rb, rtc
-```
+## 1. Namespace & attribute handling
+- Always declare `xmlns="urn:oasis:names:tc:xliff:document:2.0"` and `xmlns:fs="urn:oasis:names:tc:xliff:fs:2.0"` on `<xliff>` roots.
+- Store HTML attribute name/value pairs inside `fs:subFs` using the escape rules below so round-tripping remains lossless.
 
-Ruby annotations are preserved with their structure intact:
+### 1.1 `fs:subFs` escaping rules
+- `,` separates the attribute name from its value (`href,https://example.com`).
+- `\` separates attribute pairs (`class,hero\id,lead`).
+- Escape literal commas as `\,` and literal backslashes as `\\`.
+- Empty attribute values become `name,`.
 
-```xml
-<!-- Ruby text with annotations -->
-<unit id="u1">
-  <segment>
-    <source>The Japanese word <mrk id="m1" fs:fs="ruby">漢字<mrk id="m2" fs:fs="rt">かんじ</mrk></mrk> means Chinese characters.</source>
-  </segment>
-</unit>
+### 1.2 Original data payloads
+- Use `<originalData><data id="...">…</data></originalData>` to hold verbatim HTML fragments.
+- Prefer CDATA to avoid double escaping when the fragment contains `<` or `&` characters.
 
-<!-- Ruby with fallback parentheses -->
-<unit id="u2" xml:space="preserve">
-  <segment>
-    <source><![CDATA[<ruby>
-  漢 <rp>(</rp><rt>かん</rt><rp>)</rp>
-  字 <rp>(</rp><rt>じ</rt><rp>)</rp>
-</ruby>]]></source>
-  </segment>
-</unit>
-```
+## 2. Custom elements, web components & foreign content
+- Elements whose names contain a hyphen (for example `<app-shell>`) are treated like inline spans: wrap their textual content in `<unit>`/`<mrk>` structures with `fs:fs` set to the literal tag name.
+- `<template>` content stays in the skeleton unless it contains user-facing fallback strings—in that case, promote the text to units but keep execution scaffolding untouched.
+- `<slot>` and `slot="…"` attributes are serialized into `fs:subFs`; fallback text inside slots is handled as regular inline content.
+- SVG or MathML embedded inside HTML should stay intact inside a `<unit>` with `xml:space="preserve">`; do not rewrite their internal structure.
 
-### 1.2. Interactive Elements
+## 3. Deprecated & legacy elements
+Elements: `acronym`, `applet`, `basefont`, `big`, `blink`, `center`, `dir`, `font`, `frame`, `frameset`, `hgroup` (historically obsolete but still encountered), `isindex`, `marquee`, `menuitem`, `noframes`, `strike`, `tt`.
 
-```
-details, summary, dialog, menu
-```
+- Preserve them exactly as author-supplied, using the same strategies described for their modern counterparts (for example `center` behaves like `div`).
+- Surface the visible text through `<unit>` and `<mrk>` elements so translators can edit legacy content safely.
 
-Interactive elements are preserved as units or inline markers depending on context:
+## 4. Complete HTML element reference
+Reference column abbreviations: `510 §n` → section number inside `docs/510-prefs-html0.md`; `511 §n` → section number inside `docs/511-prefs-html1.md`.
 
-```xml
-<!-- Details/summary element -->
-<unit id="u1" fs:fs="details" fs:subFs="open," xml:space="preserve">
-  <segment>
-    <source><![CDATA[<details open>
-  <summary>More information</summary>
-  <p>This is the detailed content that can be toggled.</p>
-</details>]]></source>
-  </segment>
-</unit>
+### 4.1 Document & metadata
 
-<!-- Dialog element -->
-<unit id="u2" fs:fs="dialog" fs:subFs="id,confirm-dialog" xml:space="preserve">
-  <segment>
-    <source><![CDATA[<dialog id="confirm-dialog">
-  <p>Are you sure you want to proceed?</p>
-  <button>Yes</button>
-  <button>No</button>
-</dialog>]]></source>
-  </segment>
-</unit>
-```
+| Elements | Handling summary | Reference |
+|----------|------------------|-----------|
+| `<!DOCTYPE>` | Remains in skeleton alongside file scaffolding. | 510 §1 |
+| `html`, `head`, `body` | Skeleton placeholders; promote child text via units. | 510 §1 |
+| `base`, `link`, `meta` | Skeleton-first; inline fallbacks use `<ph>` with `originalData`. | 510 §1 / 511 §1 |
+| `title` | Unit with `fs:fs="title"`; placeholder embedded in skeleton. | 510 §5 |
+| `style`, `script`, `noscript` | Skeleton; `noscript` fallback text promoted to unit. | 511 §4 |
+| `template` | Skeleton unless it contains fallback text; then treat as unit with placeholders. | 511 §4 |
 
-### 1.3. Semantic Text Elements
+### 4.2 Sectioning & grouping
 
-```
-bdi, bdo, data, dfn, kbd, mark, output, progress, time, var
-```
+| Elements | Handling summary | Reference |
+|----------|------------------|-----------|
+| `article`, `aside`, `main`, `nav`, `section` | `<group>`/`<unit>` wrappers tagged with `fs:fs` + attributes. | 510 §2 |
+| `header`, `footer`, `div` | Skeleton wrapper; promote textual children to units. | 510 §2 |
+| `figure`, `figcaption` | `figure` as group/unit; `figcaption` as text unit. | 510 §2 |
+| `details`, `summary`, `dialog` | Preserve block with `fs:fs`; extract textual children as units. | 510 §2 |
+| `fieldset`, `legend` | Group for fieldset, legend as unit. | 510 §2 / 511 §3 |
+| `menu` | Treat like list container (`<group fs:fs="menu">`). | 510 §3 |
 
-These are handled as inline markers with Format Style:
+### 4.3 Text-level semantics & phrasing content
 
-```xml
-<!-- Bidirectional text -->
-<segment>
-  <source>User <mrk id="m1" fs:fs="bdi">إيان</mrk> joined the chat.</source>
-</segment>
+| Elements | Handling summary | Reference |
+|----------|------------------|-----------|
+| `p`, `address`, `blockquote`, `pre`, `caption` | Units with `fs:fs`; manage segmentation as defined. | 510 §5 |
+| `h1`–`h6`, `hgroup` | Units tagged with heading level; `hgroup` wraps child units. | 510 §5 |
+| `span`, `mark`, `strong`, `em`, `i`, `b`, `u`, `small`, `s` | `<mrk>` inline markers with attribute capture. | 510 §6 |
+| `cite`, `q`, `dfn`, `abbr`, `var`, `code`, `kbd`, `samp` | `<mrk>` inline markers with semantics in `fs:fs`. | 510 §6 |
+| `time`, `data`, `output`, `label` | `<mrk>` inline markers retaining value attributes. | 510 §6 |
+| `sub`, `sup`, `bdi`, `bdo`, `ruby`, `rb`, `rt`, `rp`, `rtc` | `<mrk>` inline markers; maintain direction/ruby metadata. | 510 §6 |
+| `del`, `ins` | Inline `<mrk>`; include change metadata in `fs:subFs`. | 510 §6 |
+| `hr` | `<ph>` placeholder for horizontal rules. | 511 §1 |
+| `br`, `wbr` | `<ph>` placeholders referencing `originalData`. | 511 §1 |
 
-<!-- Data element with machine-readable value -->
-<segment>
-  <source>Product code: <mrk id="m2" fs:fs="data" fs:subFs="value,ISBN-13-978-3-16-148410-0">978-3-16-148410-0</mrk></source>
-</segment>
-```
+### 4.4 Lists & tables
 
-### 1.4. Obsolete but Still Encountered Elements
+| Elements | Handling summary | Reference |
+|----------|------------------|-----------|
+| `ul`, `ol`, `li` | Container groups + child units; preserve numbering attributes. | 510 §3 |
+| `dl`, `dt`, `dd` | Definition list as group; term/definition units. | 510 §3 |
+| `table`, `caption`, `thead`, `tbody`, `tfoot`, `tr`, `th`, `td` | Table preserved as unit or nested groups; `xml:space="preserve"` when needed. | 510 §4 |
+| `colgroup`, `col` | Remain inside preserved table markup; use placeholders if edited separately. | 510 §4 / 511 §1 |
 
-```
-center, font, marquee, big, blink, strike, tt, acronym, applet, basefont, dir, frame, frameset, noframes, isindex
-```
+### 4.5 Forms & interactive controls
 
-These deprecated elements are handled for backward compatibility:
+| Elements | Handling summary | Reference |
+|----------|------------------|-----------|
+| `form` | Preserve as unit with placeholders for controls; textual children as units. | 511 §3 |
+| `label`, `legend`, `button` | Units containing visible text. | 510 §6 / 511 §3 |
+| `input`, `textarea`, `select` | Placeholders inside the parent form unit. | 511 §3 |
+| `option`, `optgroup`, `datalist` | Units for visible captions; `option` text localized per item. | 511 §3 |
+| `meter`, `progress`, `output` | Placeholders for control markup + optional inline `<mrk>` for textual fallback. | 511 §3 |
 
-```xml
-<!-- Legacy formatting -->
-<segment>
-  <source><mrk id="m1" fs:fs="font" fs:subFs="color,red\size,+2">Important Notice</mrk></source>
-</segment>
+### 4.6 Embedded content & graphics
 
-<!-- Legacy center element -->
-<unit id="u1" fs:fs="center">
-  <segment>
-    <source>Centered content for legacy pages</source>
-  </segment>
-</unit>
-```
+| Elements | Handling summary | Reference |
+|----------|------------------|-----------|
+| `img`, `picture`, `source`, `track` | `<ph>` placeholders inside media units; retain attributes. | 511 §1 / §2 |
+| `audio`, `video` | Units with `fs:fs`; child sources/tracks as placeholders. | 511 §2 |
+| `map`, `area` | Map as unit; area elements as placeholders inside the unit. | 511 §2 |
+| `iframe`, `embed`, `object`, `param` | Units containing full markup; children recorded via `originalData`. | 511 §2 |
+| `canvas` | Preserve drawing surface as unit with `xml:space="preserve"`. | 511 §2 |
+| `svg`, `math` | Store entire fragment in unit; do not alter internal markup. | 511 §2 |
 
-## 2. Namespace Declarations
+### 4.7 Scripting, web components & custom tags
 
-Always include necessary namespace declarations:
+| Elements | Handling summary | Reference |
+|----------|------------------|-----------|
+| `script` | Skeleton only; no in-line translation. | 511 §4 |
+| `noscript` | Fallback text extracted as unit; wrapper in skeleton. | 511 §4 |
+| `template`, `slot` | Preserve structure, promote fallback text when present. | 511 §4 |
+| Custom elements (`geo-map`, `app-shell`, etc.) | Treat like inline or block elements depending on content; store tag name in `fs:fs`. | 511 §4 |
 
-```xml
-<xliff version="2.1"
-       xmlns="urn:oasis:names:tc:xliff:document:2.0"
-       xmlns:fs="urn:oasis:names:tc:xliff:fs:2.0"
-       srcLang="en"
-       trgLang="fr">
-```
+With this table we can audit coverage quickly while cross-referencing the authoritative handling instructions.
 
-## 2. Escaping Rules
-
-### 2.1. For `fs:subFs` attributes:
-
-- `,` separates name from value
-- `\` separates attribute pairs
-- `\,` for literal comma
-- `\\` for literal backslash
-- Empty values: `controls,`
-
-### 2.2. For originalData in CDATA:
-
-- Use CDATA sections for complex HTML
-- Or escape: `&lt;` for `<`, `&gt;` for `>`, `&amp;` for `&`
-
-**Example:**
-
-```xml
-<originalData>
-  <data id="d1">&lt;img src="C:\Images\photo.jpg" alt="A &quot;nice&quot; day"/&gt;</data>
-  <!-- OR -->
-  <data id="d2"><![CDATA[<img src="C:\Images\photo.jpg" alt="A "nice" day"/>]]></data>
-</originalData>
-```
-
-## 3. Complete HTML5 Tag Reference Summary
-
-### 3.1. Categorization by XLIFF Handling
-
-| Category | Elements | XLIFF Method |
-|----------|----------|---------------|
-| **Structural** | html, head, body, base, link, meta, noscript, script, style, template, article, aside, details, dialog, fieldset, figure, footer, header, main, menu, nav, section, div | Skeleton file |
-| **List Containers** | dl, ol, ul | `<group>` with fs:fs |
-| **Text Blocks** | blockquote, caption, dd, dt, h1-h6, legend, li, p, pre, title, address, figcaption, summary | `<unit>` with fs:fs |
-| **Inline Text** | a, b, button, cite, code, del, em, i, label, q, s, samp, small, span, strike, strong, sub, sup, tt, u, abbr, bdi, bdo, data, dfn, ins, kbd, mark, output, progress, ruby, rt, rp, time, var | `<mrk>` with fs:fs |
-| **Self-closing** | br, hr, wbr, img, audio, video, canvas, embed, iframe, object, picture, map, area, source, track, col, base, link, meta, input, meter | `<ph>` with originalData |
-| **Tables** | table, tbody, tfoot, thead, tr, td, th, col, colgroup | Preserve in `<unit>` with xml:space="preserve" |
-| **Forms** | form, input, select, datalist, optgroup, option, textarea, label, button, output, fieldset, legend | Preserve in `<unit>` with xml:space="preserve" |
-| **Media Complex** | audio, video (with source/track children) | Preserve in `<unit>` |
-| **Web Components** | slot, template, custom elements | Preserve or `<ph>` based on complexity |
-
-## 4. Complete Example
-
-**XLIFF Extraction:**
-
-```xml
-<xliff version="2.1"
-       xmlns="urn:oasis:names:tc:xliff:document:2.0"
-       xmlns:fs="urn:oasis:names:tc:xliff:fs:2.0"
-       srcLang="en" trgLang="fr">
-  <file id="f1" original="review.html">
-    <unit id="u1" fs:fs="h1">
-      <segment>
-        <source>Product Review</source>
-      </segment>
-    </unit>
-    <unit id="u2" fs:fs="p">
-      <originalData>
-        <data id="d1">&lt;br/&gt;</data>
-        <data id="d2">&lt;meter value="9" max="10"&gt;9 out of 10&lt;/meter&gt;</data>
-      </originalData>
-      <segment>
-        <source>This is an <mrk id="m1" fs:fs="strong">excellent</mrk> product!<ph id="ph1" dataRef="d1"/>
-        Rating: <ph id="ph2" dataRef="d2"/></source>
-      </segment>
-    </unit>
-    <unit id="u3">
-      <originalData>
-        <data id="d3">&lt;img src="product.jpg" alt="Product photo"/&gt;</data>
-      </originalData>
-      <segment>
-        <source><ph id="ph3" dataRef="d3"/></source>
-      </segment>
-    </unit>
-    <unit id="u4" fs:fs="p">
-      <segment>
-        <source>Buy it <mrk id="m2" fs:fs="a" fs:subFs="href,/shop">here</mrk>.</source>
-      </segment>
-    </unit>
-  </file>
-</xliff>
-```
+## 5. Validation checklist
+- Verify that every `<unit>` created from HTML carries `fs:fs` matching the original tag.
+- Ensure all placeholder `<ph>` nodes reference a defined `<data id="…">` entry.
+- Confirm segmentation rules: `<s>` elements map 1:1 with `<segment>` entries; paragraphs run through sentence splitting.
+- Compare conversions against the official OASIS XLIFF 2.1 specification located at `external/901-xliff-spec-core-21.xml` whenever uncertainty arises.

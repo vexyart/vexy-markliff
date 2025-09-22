@@ -1,297 +1,123 @@
+---
+this_file: docs/510-prefs-html0.md
+---
 
-# 2. Expressing HTML elements in XLIFF by Vexy Markliff (1)
+# 2. HTML → XLIFF Structural Rules (Part 1)
 
-## 1. Structural elements
+## Scope
+- Covers document-level, sectioning, block, and inline HTML5 elements that carry translatable text.
+- Establishes how we rely on the XLIFF 2.1 Format Style module (`fs:fs`, `fs:subFs`) to retain HTML semantics.
+- All attribute serialization follows the escaping rules in `docs/512-prefs-html2.md`.
 
-```
-html, head, body, base, link, meta, noscript, script, style, template,
-article, aside, details, dialog, fieldset, figure, footer, header, main,
-menu, nav, section, div
-```
+## 1. Document skeleton & non-translatable wrappers
+Elements: `<!DOCTYPE>`, `html`, `head`, `body`, `base`, `link`, `meta`, `script`, `style`, `noscript`, `template`.
 
-In XLIFF, we express these elements using a skeleton file referenced in the `<file>` element.
+- These nodes live in the XLIFF skeleton referenced from `<file><skeleton href="..."/>`.
+- Place holders such as `###u17###` mark where localizable units return during merge.
+- The only text promoted out of the skeleton is content inside child elements described in later sections (for example `<title>` or `<p>`).
 
-**Example:**
-
-```xml
-<file id="f1" original="index.html">
-  <skeleton href="skeleton/index.skl.html"/>
-  <unit id="u1">
-    <segment>
-      <source>Welcome to our website</source>
-    </segment>
-  </unit>
-</file>
-```
-
-The skeleton file (`skeleton/index.skl.html`) contains:
+**Skeleton example**
 
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <title>###u1###</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <header>###u2###</header>
-    <main>###u3###</main>
-    <footer>###u4###</footer>
-  </body>
+  <body class="landing">###u2###</body>
 </html>
 ```
 
-## 2. List elements
+## 2. Sectioning & grouping elements
+Elements: `article`, `aside`, `details`, `dialog`, `div`, `fieldset`, `figure`, `figcaption`, `footer`, `header`, `main`, `menu`, `nav`, `section`, `summary`.
 
-```
-dl, ol, ul
-```
+- Wrap each section as a `<unit>` or `<group>` with `fs:fs` pointing at the HTML element name.
+- Store attributes in `fs:subFs` (escape commas/backslashes per `docs/512-prefs-html2.md`).
+- Keep purely structural nodes (for example `<div>` with only child blocks) in the skeleton and promote only child blocks to units.
+- Promote text-bearing nodes (`figcaption`, `summary`, `dialog`) into units so the strings are editable.
 
-In XLIFF, we express these elements using a `<group>` with the Format Style module to preserve list attributes.
-
-**Example:**
+**Example**
 
 ```xml
-<group id="g1" fs:fs="ul" fs:subFs="class,todo-list\id,main-list">
-  <unit id="u1">
-    <segment>
-      <source>First list item</source>
-    </segment>
-  </unit>
-  <unit id="u2">
-    <segment>
-      <source>Second list item</source>
-    </segment>
-  </unit>
-</group>
-
-<!-- Ordered list with start attribute -->
-<group id="g2" fs:fs="ol" fs:subFs="start,5\type,A">
-  <unit id="u3">
-    <segment>
-      <source>Item starting from 5</source>
-    </segment>
-  </unit>
-</group>
-
-<!-- Definition list -->
-<group id="g3" fs:fs="dl">
-  <unit id="u4" fs:fs="dt">
-    <segment>
-      <source>Term</source>
-    </segment>
-  </unit>
-  <unit id="u5" fs:fs="dd">
-    <segment>
-      <source>Definition of the term</source>
-    </segment>
+<group id="nav" fs:fs="nav" fs:subFs="class,main-menu">
+  <unit id="nav-title" fs:fs="h2">
+    <segment><source>Site navigation</source></segment>
   </unit>
 </group>
 ```
 
-## 3. Textual block elements
+## 3. Lists
+Elements: `ul`, `ol`, `li`, `menu`, `dl`, `dt`, `dd`.
 
-```
-blockquote, caption, dd, dt, h1, h2, h3, h4, h5, h6, legend, li, p, pre,
-title, address, figcaption, summary
-```
+- Represent each list container with a `<group>` whose `fs:fs` is the container tag.
+- Each `<li>`, `<dt>`, `<dd>` becomes a child `<unit>` tagged with the element name.
+- Preserve list-specific attributes (`start`, `type`, `reversed`, `value`) inside `fs:subFs`.
+- For nested lists, create nested groups mirroring the HTML hierarchy.
 
-In XLIFF, we express these elements using a `<unit>` with Format Style attributes.
-
-**Examples:**
-
-```xml
-<!-- Heading with attributes -->
-<unit id="u1" fs:fs="h1" fs:subFs="class,main-title\id,page-header">
-  <segment>
-    <source>Welcome to Our Service</source>
-  </segment>
-</unit>
-
-<!-- Paragraph with inline elements and line break -->
-<unit id="u2" fs:fs="p">
-  <originalData>
-    <data id="d1">&lt;br/&gt;</data>
-  </originalData>
-  <segment>
-    <source>This is <mrk id="m1" fs:fs="strong">important</mrk> information.<ph id="ph1" dataRef="d1"/>
-    Second line starts here.</source>
-  </segment>
-</unit>
-
-<!-- Preformatted text preserving whitespace -->
-<unit id="u3" fs:fs="pre" xml:space="preserve">
-  <segment>
-    <source>function hello() {
-    console.log("Hello, World!");
-}</source>
-  </segment>
-</unit>
-
-<!-- Blockquote with citation -->
-<unit id="u4" fs:fs="blockquote" fs:subFs="cite,https://example.com/quote">
-  <segment>
-    <source>The only way to do great work is to love what you do.</source>
-  </segment>
-</unit>
-```
-
-A `<unit>` contains one or more `<segment>` elements.
-
-One segment may contain the entire content of a block element. However, our app should employ an additional step that: 
-
-- If the HTML source contains a `<s>` element, we convert it into a single `<segment>`, and don’t split its content further. 
-- If the HTML source contains a `<p>` element, we employ an intelligent sentence splitting algorithm that splits that `<p>` into multiple segments, one per sentence. 
-
-### 3.1. 2.3 The `<s>` Element Strategy
-
-When Markdown contains explicit `<s>` (sentence) elements:
-
-```markdown
-<s id="intro-1">This is the first sentence.</s> <s id="intro-2">This is the second.</s>
-```
-
-Convert each `<s>` to one XLIFF segment:
+**Example**
 
 ```xml
-<segment id="intro-1" state="initial">
-  <source>This is the first sentence.</source>
-  <target>Dies ist der erste Satz.</target>
-</segment>
-<segment id="intro-2" state="initial">
-  <source>This is the second.</source>
-  <target>Dies ist der zweite.</target>
-</segment>
+<group id="faq" fs:fs="dl">
+  <unit id="q1" fs:fs="dt"><segment><source>What is Markliff?</source></segment></unit>
+  <unit id="a1" fs:fs="dd"><segment><source>It is our HTML↔XLIFF bridge.</source></segment></unit>
+</group>
 ```
 
+## 4. Tabular structures
+Elements: `table`, `caption`, `colgroup`, `col`, `thead`, `tbody`, `tfoot`, `tr`, `th`, `td`.
 
+- Preserve the full table markup in a `<unit>` with `xml:space="preserve"` when cell structure must survive intact.
+- Add `fs:fs="table"` (or the relevant element) on that unit and capture table-level attributes inside `fs:subFs`.
+- If the table content needs cell-by-cell editing, break the table into child units while keeping the outer table skeleton in `originalData`.
+- Use `<originalData>` with CDATA for complex tables to avoid double escaping.
 
-## 4. Table elements
-
-```
-col, colgroup, table, tbody, tfoot, thead, tr, td, th
-```
-
-In XLIFF, we retain an HTML `<table>` verbatim as a single `<unit>` with `xml:space="preserve"`. We store the table's root attributes using Format Style attributes on the unit, and keep all internal structure intact.
-
-**Examples:**
+**Example**
 
 ```xml
-<!-- Simple table -->
-<unit id="u1" fs:fs="table" fs:subFs="class,data-table\id,users" xml:space="preserve">
+<unit id="pricing" fs:fs="table" fs:subFs="class,pricing" xml:space="preserve">
   <segment>
-    <source><![CDATA[<table class="data-table" id="users">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>John Doe</td>
-      <td>john@example.com</td>
-    </tr>
-    <tr>
-      <td>Jane Smith</td>
-      <td>jane@example.com</td>
-    </tr>
-  </tbody>
-</table>]]></source>
-  </segment>
-</unit>
-
-<!-- Complex table with colspan/rowspan -->
-<unit id="u2" fs:fs="table" fs:subFs="border,1\cellpadding,5" xml:space="preserve">
-  <segment>
-    <source><![CDATA[<table border="1" cellpadding="5">
-  <caption>Sales Report</caption>
-  <colgroup>
-    <col style="background-color:#f0f0f0">
-    <col span="2">
-  </colgroup>
-  <thead>
-    <tr>
-      <th rowspan="2">Product</th>
-      <th colspan="2">Sales</th>
-    </tr>
-    <tr>
-      <th>Q1</th>
-      <th>Q2</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Widget A</td>
-      <td>$10,000</td>
-      <td>$12,000</td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td>Total</td>
-      <td colspan="2">$22,000</td>
-    </tr>
-  </tfoot>
-</table>]]></source>
+    <source><![CDATA[<table class="pricing"><thead><tr><th>Plan</th><th>Price</th></tr></thead>
+    <tbody><tr><td>Starter</td><td>$9</td></tr></tbody></table>]]></source>
   </segment>
 </unit>
 ```
 
-## 5. Inline elements with text content
+## 5. Flow text blocks & headings
+Elements: `address`, `blockquote`, `caption`, `h1`–`h6`, `hgroup`, `legend`, `p`, `pre`, `title`.
 
-```
-a, b, button, cite, code, del, em, i, label, q, s, samp, small,
-span, strike, strong, sub, sup, tt, u, abbr, bdi, bdo, data,
-dfn, ins, kbd, mark, output, progress, ruby, rt, rp, time, var
-```
+- Each element becomes a `<unit>` with `fs:fs` equal to the tag name.
+- Preserve whitespace-sensitive elements (`pre`) using `xml:space="preserve"`.
+- For `<title>` we use the skeleton placeholder pattern (see section 1) but store the string inside a unit so translators can update it.
+- `hgroup` is treated as a container whose headings become sequential units; include a `group` wrapper tagged `hgroup` to retain semantics.
 
-In XLIFF, we express these elements containing text using `<mrk>` elements with Format Style attributes.
+### 5.1 Segmentation policy
+- `<s>` elements: never split; one segment per element.
+- `<p>` elements: run sentence segmentation so each sentence becomes its own `<segment>`.
+- Other block elements default to one segment unless the HTML already carries `<s>` or explicit inline segmentation cues.
 
-**Examples:**
+## 6. Inline text semantics
+Elements: `a`, `abbr`, `b`, `bdi`, `bdo`, `cite`, `code`, `data`, `del`, `dfn`, `em`, `i`, `ins`, `kbd`, `label`, `mark`, `output`, `q`, `ruby`, `rb`, `rp`, `rt`, `rtc`, `s`, `samp`, `small`, `span`, `strong`, `sub`, `sup`, `time`, `u`, `var`.
+
+- Inline tags become `<mrk>` nodes nested inside the surrounding segment.
+- Set `fs:fs` to the tag, and serialize attributes (for example `href`, `datetime`, `title`, `aria-*`) in `fs:subFs`.
+- Preserve nested inline markup exactly as it appears; the merger replays the hierarchy when injecting the translation.
+- For edit tracking tags (`ins`, `del`) include state attributes (for example `datetime`) so reviewers can reconstruct change history.
+- Ruby annotations combine `ruby`, `rb`, `rt`, `rp`, `rtc` markers; keep them grouped so downstream tooling can rebuild East Asian text layout.
+
+**Example**
 
 ```xml
-<!-- Link with multiple attributes -->
 <segment>
-  <source>Visit our <mrk id="m1" fs:fs="a"
-    fs:subFs="href,https://example.com\target,_blank\rel,noopener\class,external-link">
-    homepage</mrk> for more info.</source>
-</segment>
-
-<!-- Nested inline elements -->
-<segment>
-  <source>This is <mrk id="m2" fs:fs="strong">very
-    <mrk id="m3" fs:fs="em">important</mrk></mrk> text.</source>
-</segment>
-
-<!-- Button with attributes -->
-<segment>
-  <source><mrk id="m4" fs:fs="button"
-    fs:subFs="type,submit\class,btn btn-primary\onclick,handleSubmit()">
-    Submit Form</mrk></source>
-</segment>
-
-<!-- Time element with datetime -->
-<segment>
-  <source>Meeting at <mrk id="m5" fs:fs="time"
-    fs:subFs="datetime,2024-01-15T14:30:00Z">2:30 PM</mrk></source>
-</segment>
-
-<!-- Abbreviation -->
-<segment>
-  <source>The <mrk id="m6" fs:fs="abbr"
-    fs:subFs="title,World Wide Web">WWW</mrk> revolutionized communication.</source>
-</segment>
-
-<!-- Code with escaping -->
-<segment>
-  <source>Use <mrk id="m7" fs:fs="code">console.log("Hello\, World")</mrk> to debug.</source>
-</segment>
-
-<!-- Progress bar with value -->
-<segment>
-  <source>Download progress: <mrk id="m8" fs:fs="progress"
-    fs:subFs="value,70\max,100">70%</mrk></source>
+  <source>View the <mrk id="m1" fs:fs="a" fs:subFs="href,https://example.com\target,_blank">
+    documentation</mrk> updated on <mrk id="m2" fs:fs="time" fs:subFs="datetime,2024-05-12">May 12</mrk>.</source>
 </segment>
 ```
 
+## 7. Directionality & emphasis helpers
+- Apply `fs:subFs` to keep `lang`, `dir`, `translate`, and other global attributes on inline spans.
+- For `<bdi>`/`<bdo>`, always retain the `dir` attribute; if missing, set `fs:subFs="dir,auto"` to capture defaults.
+- Convert `<span>` or `<mark>` used solely for styling into `<mrk>` with the relevant class information so CSS round-trips cleanly.
+
+These rules align with the preference tables in `docs/512-prefs-html2.md`, ensuring every HTML5 element now has a defined XLIFF strategy.

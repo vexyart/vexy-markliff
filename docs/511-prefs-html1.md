@@ -1,324 +1,88 @@
-# 3. Expressing HTML elements in XLIFF by Vexy Markliff (2)
+---
+this_file: docs/511-prefs-html1.md
+---
 
-## 1. Self-closing and non-localizable inline elements
+# 3. HTML → XLIFF Structural Rules (Part 2)
 
-```
-br, hr, wbr, img, audio, video, canvas, embed, iframe, object,
-picture, map, area, source, track, col, base, link, meta,
-input (standalone), meter, script, style, noscript
-```
+## Scope
+- Defines handling for HTML5 void elements, embedded media, and form controls.
+- Builds on `docs/510-prefs-html0.md`; attribute serialization and escaping still follow `docs/512-prefs-html2.md`.
 
-In XLIFF, we express these elements using `<ph>` (placeholder) elements with `originalData`.
+## 1. Void & placeholder elements
+Primary elements: `area`, `base`, `br`, `col`, `embed`, `hr`, `img`, `input`, `link`, `meta`, `param`, `source`, `track`, `wbr`.
 
-**Examples:**
+- Represent each occurrence with a `<ph>` tag whose `dataRef` points to `originalData`.
+- `originalData` holds the literal HTML (escaped or wrapped in CDATA when needed).
+- Metadata-only tags (`base`, `link`, `meta`) usually remain in the skeleton, but this rule covers inline fallbacks when they appear in mixed content (for example Markdown raw HTML).
+- Provide deterministic IDs (for example `ph-img-001`) so merge operations can match placeholders back to their HTML counterparts.
 
-```xml
-<!-- Paragraph with line breaks and horizontal rule -->
-<unit id="u1" fs:fs="p">
-  <originalData>
-    <data id="d1">&lt;br/&gt;</data>
-    <data id="d2">&lt;hr class="section-divider"/&gt;</data>
-  </originalData>
-  <segment>
-    <source>First line<ph id="ph1" dataRef="d1"/>
-    Second line<ph id="ph2" dataRef="d1"/>
-    Third line<ph id="ph3" dataRef="d2"/>
-    New section starts here.</source>
-  </segment>
-</unit>
-
-<!-- Text with images -->
-<unit id="u2">
-  <originalData>
-    <data id="d1">&lt;img src="/images/logo.png" alt="Company Logo" width="200" height="50"/&gt;</data>
-    <data id="d2">&lt;img src="/images/icon.svg" alt="Icon" class="inline-icon"/&gt;</data>
-  </originalData>
-  <segment>
-    <source><ph id="ph1" dataRef="d1"/> Welcome to our site. Click the <ph id="ph2" dataRef="d2"/> icon for help.</source>
-  </segment>
-</unit>
-
-<!-- Word break opportunities -->
-<unit id="u3">
-  <originalData>
-    <data id="d1">&lt;wbr/&gt;</data>
-  </originalData>
-  <segment>
-    <source>Super<ph id="ph1" dataRef="d1"/>califragilistic<ph id="ph2" dataRef="d1"/>expialidocious</source>
-  </segment>
-</unit>
-
-<!-- Embedded media -->
-<unit id="u4">
-  <originalData>
-    <data id="d1">&lt;video src="intro.mp4" controls width="640" height="360" poster="poster.jpg"&gt;&lt;/video&gt;</data>
-    <data id="d2">&lt;audio src="podcast.mp3" controls&gt;&lt;/audio&gt;</data>
-  </originalData>
-  <segment>
-    <source>Watch our introduction video: <ph id="ph1" dataRef="d1"/>
-    Listen to the podcast: <ph id="ph2" dataRef="d2"/></source>
-  </segment>
-</unit>
-
-<!-- Iframe embed -->
-<unit id="u5">
-  <originalData>
-    <data id="d1">&lt;iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" width="560" height="315" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</data>
-  </originalData>
-  <segment>
-    <source>Check out this video: <ph id="ph1" dataRef="d1"/></source>
-  </segment>
-</unit>
-
-<!-- Script and style elements -->
-<unit id="u6">
-  <originalData>
-    <data id="d1">&lt;script src="/js/analytics.js" async&gt;&lt;/script&gt;</data>
-    <data id="d2">&lt;style&gt;.highlight { background: yellow; }&lt;/style&gt;</data>
-    <data id="d3">&lt;noscript&gt;Please enable JavaScript&lt;/noscript&gt;</data>
-  </originalData>
-  <segment>
-    <source><ph id="ph1" dataRef="d1"/><ph id="ph2" dataRef="d2"/>Content here<ph id="ph3" dataRef="d3"/></source>
-  </segment>
-</unit>
-
-<!-- Canvas and meter -->
-<unit id="u7">
-  <originalData>
-    <data id="d1">&lt;canvas id="myCanvas" width="300" height="150"&gt;&lt;/canvas&gt;</data>
-    <data id="d2">&lt;meter value="6" min="0" max="10"&gt;6 out of 10&lt;/meter&gt;</data>
-  </originalData>
-  <segment>
-    <source>Drawing area: <ph id="ph1" dataRef="d1"/> Score: <ph id="ph2" dataRef="d2"/></source>
-  </segment>
-</unit>
-
-<!-- Picture element with sources -->
-<unit id="u8">
-  <originalData>
-    <data id="d1">&lt;picture&gt;
-  &lt;source media="(min-width:650px)" srcset="img_large.jpg"&gt;
-  &lt;source media="(min-width:465px)" srcset="img_medium.jpg"&gt;
-  &lt;img src="img_small.jpg" alt="Responsive image"&gt;
-&lt;/picture&gt;</data>
-  </originalData>
-  <segment>
-    <source>Product image: <ph id="ph1" dataRef="d1"/></source>
-  </segment>
-</unit>
-```
-
-## 2. Form elements
-
-```
-form, input, select, datalist, optgroup, option, textarea
-```
-
-Also `label, output, button` if inside a `form`
-
-Forms are retained verbatim as a single `<unit>` with `xml:space="preserve"`. Standalone form inputs are wrapped in a form first.
-
-**Examples:**
+**Example**
 
 ```xml
-<!-- Complete form -->
-<unit id="u1" fs:fs="form" fs:subFs="action,/submit\method,POST\id,contact-form" xml:space="preserve">
+<unit id="hero-copy" fs:fs="p">
+  <originalData>
+    <data id="img1">&lt;img src="hero.png" alt="Dashboard screenshot" width="640" height="320"/&gt;</data>
+    <data id="br1">&lt;br/&gt;</data>
+  </originalData>
   <segment>
-    <source><![CDATA[<form action="/submit" method="POST" id="contact-form">
-  <div class="form-group">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
-  </div>
-  <div class="form-group">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-  </div>
-  <div class="form-group">
-    <label for="country">Country:</label>
-    <select id="country" name="country">
-      <option value="">Select a country</option>
-      <optgroup label="Europe">
-        <option value="fr">France</option>
-        <option value="de">Germany</option>
-      </optgroup>
-      <optgroup label="Americas">
-        <option value="us">United States</option>
-        <option value="ca">Canada</option>
-      </optgroup>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="browser">Browser:</label>
-    <input list="browsers" id="browser" name="browser">
-    <datalist id="browsers">
-      <option value="Chrome">
-      <option value="Firefox">
-      <option value="Safari">
-      <option value="Edge">
-    </datalist>
-  </div>
-  <div class="form-group">
-    <label for="message">Message:</label>
-    <textarea id="message" name="message" rows="4" cols="50"></textarea>
-  </div>
-  <button type="submit">Submit</button>
-  <output id="result"></output>
+    <source><ph id="ph-img1" dataRef="img1"/> Experience Markliff today.<ph id="ph-br1" dataRef="br1"/></source>
+  </segment>
+</unit>
+```
+
+## 2. Embedded & interactive media
+Elements: `audio`, `video`, `canvas`, `iframe`, `map`, `object`, `picture`, `svg`, `math` (foreign content), plus supporting children `area`, `source`, `track`, `param`.
+
+- For self-contained widgets (`iframe`, `canvas`, `object`, `svg`, `math`), store the full markup inside a `<unit>` with `xml:space="preserve"`.
+- Maintain hierarchy when `picture` wraps multiple `source` tags; keep the wrapper as a `<unit>` and reference children through `originalData` entries so resolvers can rebuild the responsive set.
+- `map` regions: record the `<map>` element as a `<unit>` and treat each `<area>` as a placeholder inside it.
+- `audio`/`video`: if they contain captions or tracks, mirror the nesting as groups (`fs:fs="audio"`, child placeholders for `<source>` and `<track>`). Embed transcripts as child units when present.
+
+**Example**
+
+```xml
+<unit id="product-video" fs:fs="video" fs:subFs="controls,\true\width,640" xml:space="preserve">
+  <originalData>
+    <data id="src-main">&lt;source src="promo.mp4" type="video/mp4"/&gt;</data>
+    <data id="src-webm">&lt;source src="promo.webm" type="video/webm"/&gt;</data>
+    <data id="trk-en">&lt;track kind="subtitles" src="promo-en.vtt" srclang="en" label="English" default&gt;</data>
+  </originalData>
+  <segment>
+    <source><ph id="ph-src1" dataRef="src-main"/><ph id="ph-src2" dataRef="src-webm"/><ph id="ph-trk1" dataRef="trk-en"/></source>
+  </segment>
+</unit>
+```
+
+## 3. Forms & controls
+Elements: `form`, `button`, `datalist`, `fieldset`, `input`, `label`, `legend`, `meter`, `optgroup`, `option`, `output`, `progress`, `select`, `textarea`.
+
+- Preserve complete forms (`<form>` through closing tag) as `<unit>` blocks with `xml:space="preserve"`; this keeps validation attributes intact.
+- Inside forms, treat visible text (for example `<label>`, button captions) as child units so translators can edit them without touching markup.
+- Void controls (`input`, `meter`, `progress`) use placeholders, but they remain inside the parent unit to maintain ordering.
+- When Markdown produces standalone inputs (task lists), fall back to the placeholder workflow defined above.
+
+**Example**
+
+```xml
+<unit id="contact-form" fs:fs="form" fs:subFs="action,/submit\method,POST" xml:space="preserve">
+  <segment>
+    <source><![CDATA[<form action="/submit" method="POST">
+  <label for="name">###u-name###</label>
+  <input id="name" name="name" type="text" required>
+  <button type="submit">###u-submit###</button>
 </form>]]></source>
   </segment>
 </unit>
-
-<!-- Standalone input elements (not in a form) get treated as placeholders -->
-<unit id="u2">
-  <originalData>
-    <data id="d1">&lt;input type="search" placeholder="Search..." name="q"&gt;</data>
-    <data id="d2">&lt;input type="checkbox" id="agree" name="agree" value="yes"&gt;</data>
-  </originalData>
-  <segment>
-    <source>Search box: <ph id="ph1" dataRef="d1"/>
-    <ph id="ph2" dataRef="d2"/> I agree to the terms</source>
-  </segment>
-</unit>
-
-<!-- Mixed content with form elements -->
-<unit id="u3">
-  <originalData>
-    <data id="d1">&lt;input type="submit" value="Send"&gt;</data>
-  </originalData>
-  <segment>
-    <source>Click here to submit: <ph id="ph1" dataRef="d1"/></source>
-  </segment>
-</unit>
+<unit id="u-name" fs:fs="label"><segment><source>Name</source></segment></unit>
+<unit id="u-submit" fs:fs="button"><segment><source>Send</source></segment></unit>
 ```
 
-## 3. Media elements with tracks
+## 4. Scripting & templating hooks
+Elements: `script`, `noscript`, `template`, `slot`.
 
-```
-audio, video (with source and track children)
-```
+- Default placement is the skeleton; keep localization content outside executable code.
+- If a `<script>` tag contains user-facing strings, extract them separately (for example via JSON parsing) before they reach Markliff; we do not translate inline JavaScript.
+- `noscript` blocks with fallback text become `<unit>` elements so the message is localizable, while the tag itself stays in the skeleton.
+- Web component anchors (`template`, `slot`, and any custom-element name containing a hyphen) are preserved as either skeleton fragments or `<unit>` blocks with placeholders, depending on whether they contain textual fallback content. See `docs/512-prefs-html2.md` for the custom-element policy.
 
-Media elements with multiple sources and tracks are preserved as complete units.
-
-**Examples:**
-
-```xml
-<!-- Video with tracks - preserved as unit -->
-<unit id="u1" fs:fs="video" fs:subFs="controls,\width,640\height,360" xml:space="preserve">
-  <segment>
-    <source><![CDATA[<video controls width="640" height="360">
-  <source src="movie.mp4" type="video/mp4">
-  <source src="movie.webm" type="video/webm">
-  <track kind="captions" src="captions_en.vtt" srclang="en" label="English">
-  <track kind="captions" src="captions_es.vtt" srclang="es" label="Español">
-  Your browser doesn't support video.
-</video>]]></source>
-  </segment>
-</unit>
-
-<!-- Simple video as placeholder -->
-<unit id="u2">
-  <originalData>
-    <data id="d1">&lt;video src="simple.mp4" controls&gt;&lt;/video&gt;</data>
-  </originalData>
-  <segment>
-    <source>Tutorial video: <ph id="ph1" dataRef="d1"/></source>
-  </segment>
-</unit>
-
-<!-- Audio with sources - preserved as unit -->
-<unit id="u3" fs:fs="audio" fs:subFs="controls," xml:space="preserve">
-  <segment>
-    <source><![CDATA[<audio controls>
-  <source src="audio.ogg" type="audio/ogg">
-  <source src="audio.mp3" type="audio/mpeg">
-  Your browser doesn't support audio.
-</audio>]]></source>
-  </segment>
-</unit>
-
-<!-- Image map with areas -->
-<unit id="u4" xml:space="preserve">
-  <segment>
-    <source><![CDATA[<img src="workplace.jpg" alt="Workplace" usemap="#workmap">
-<map name="workmap">
-  <area shape="rect" coords="34,44,270,350" alt="Computer" href="computer.htm">
-  <area shape="circle" coords="337,300,44" alt="Coffee" href="coffee.htm">
-</map>]]></source>
-  </segment>
-</unit>
-```
-
-## 4. Web Components / Custom elements
-
-```
-slot, template, custom elements
-```
-
-Web components and templates are preserved as complete units when they contain complex structure, or as placeholders when standalone.
-
-**Examples:**
-
-```xml
-<!-- Template element - preserved as unit -->
-<unit id="u1" fs:fs="template" fs:subFs="id,user-card-template" xml:space="preserve">
-  <segment>
-    <source><![CDATA[<template id="user-card-template">
-  <style>
-    .card { border: 1px solid #ccc; padding: 10px; }
-  </style>
-  <div class="card">
-    <h3><slot name="username">Default Name</slot></h3>
-    <p><slot name="email">default@example.com</slot></p>
-  </div>
-</template>]]></source>
-  </segment>
-</unit>
-
-<!-- Custom element with slots - preserved as unit -->
-<unit id="u2" fs:fs="user-card" fs:subFs="user-id,123" xml:space="preserve">
-  <segment>
-    <source><![CDATA[<user-card user-id="123">
-  <span slot="username">John Doe</span>
-  <span slot="email">john@example.com</span>
-</user-card>]]></source>
-  </segment>
-</unit>
-
-<!-- Simple custom element as placeholder -->
-<unit id="u3">
-  <originalData>
-    <data id="d1">&lt;my-component id="comp1" data-value="42"&gt;&lt;/my-component&gt;</data>
-  </originalData>
-  <segment>
-    <source>Component output: <ph id="ph1" dataRef="d1"/></source>
-  </segment>
-</unit>
-
-<!-- Shadow DOM template -->
-<unit id="u4" xml:space="preserve">
-  <segment>
-    <source><![CDATA[<my-element>
-  <template shadowrootmode="open">
-    <style>:host { display: block; }</style>
-    <slot></slot>
-  </template>
-  <p>Light DOM content</p>
-</my-element>]]></source>
-  </segment>
-</unit>
-```
-
-# 2. Decision Matrix for Element Handling
-
-| Element Type | XLIFF Representation | When to Use |
-| --- | --- | --- |
-| Structural (div, section, etc.) | Skeleton | Page structure |
-| List containers (ul, ol, dl) | `<group>` | List organization |
-| Text blocks (p, h1-h6, etc.) | `<unit>` | Translatable blocks |
-| Inline with text (a, strong, em, etc.) | `<mrk>` | Inline formatting |
-| Self-closing (br, hr, img, etc.) | `<ph>` with originalData | Non-translatable inline |
-| Tables | Preserved in `<unit>` | Complex structures |
-| Forms | Preserved in `<unit>` | Interactive elements |
-| Media elements | `<ph>` or preserved unit | Depends on complexity |
-| Scripts/styles | `<ph>` with originalData | Non-localizable |
-
-
+By combining these rules with the block and inline guidance in `docs/510-prefs-html0.md`, every HTML5 element now has an explicitly documented XLIFF representation.
