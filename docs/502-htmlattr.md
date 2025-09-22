@@ -1,11 +1,3 @@
----
-author: Unknown
-date: '2023-01-01'
-id: html-attributes-guide
-title: HTML Attributes Guide
-type: text
----
-
 # HTML Attributes Guide
 
 ## Common global attributes (work on almost all elements)
