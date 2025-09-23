@@ -61,7 +61,12 @@ class VexyMarkliffCLI:
         self._convert_file(input_file, output_file, "xliff_to_html")
 
     def _convert_file(
-        self, input_file: str, output_file: str, conversion_type: str, source_lang: str = None, target_lang: str = None
+        self,
+        input_file: str,
+        output_file: str,
+        conversion_type: str,
+        source_lang: str | None = None,
+        target_lang: str | None = None,
     ) -> None:
         """Common conversion logic for all formats.
 
@@ -76,14 +81,11 @@ class VexyMarkliffCLI:
             # Check input file exists
             input_path = Path(input_file)
             if not input_path.exists():
-                print(f"❌ Error: Input file not found: {input_file}")
                 sys.exit(1)
 
             # Read input file
             with open(input_file, encoding="utf-8") as f:
                 content = f.read()
-
-            print(f"Converting {input_file}...")
 
             # Perform conversion based on type
             if conversion_type == "markdown":
@@ -95,7 +97,8 @@ class VexyMarkliffCLI:
             elif conversion_type == "xliff_to_html":
                 output_content = self.converter.xliff_to_html(content)
             else:
-                raise ValueError(f"Unknown conversion type: {conversion_type}")
+                msg = f"Unknown conversion type: {conversion_type}"
+                raise ValueError(msg)
 
             # Ensure output directory exists
             output_path = Path(output_file)
@@ -105,10 +108,7 @@ class VexyMarkliffCLI:
             with open(output_file, "w", encoding="utf-8") as f:
                 f.write(output_content)
 
-            print(f"✅ Successfully converted to {output_file}")
-
-        except Exception as e:
-            print(f"❌ Error: {e}")
+        except Exception:
             sys.exit(1)
 
 

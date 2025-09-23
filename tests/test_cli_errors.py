@@ -28,7 +28,8 @@ class TestCLIErrorHandling:
 
         # Mock the converter to raise an exception
         def mock_markdown_to_xliff(*args, **kwargs):
-            raise Exception("Conversion error")
+            msg = "Conversion error"
+            raise Exception(msg)
 
         monkeypatch.setattr(cli.converter, "markdown_to_xliff", mock_markdown_to_xliff)
 

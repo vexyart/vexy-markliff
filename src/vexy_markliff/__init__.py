@@ -189,10 +189,10 @@ _LAZY_IMPORTS = {
 }
 
 __all__ = [
+    "ConversionConfig",
     # Main API
     "VexyMarkliff",
     "VexyMarkliffCLI",
-    "ConversionConfig",
     "__version__",
 ]
 

@@ -22,7 +22,8 @@ class ConversionConfig:
         # Validate language codes
         for lang_code, field_name in [(source_language, "source_language"), (target_language, "target_language")]:
             if not (len(lang_code) == 2 and lang_code.isalpha() and lang_code.islower()):
-                raise ValueError(f"Invalid {field_name}: {lang_code}. Must be 2-letter lowercase code.")
+                msg = f"Invalid {field_name}: {lang_code}. Must be 2-letter lowercase code."
+                raise ValueError(msg)
 
         self.source_language = source_language
         self.target_language = target_language
