@@ -236,6 +236,7 @@ csx/
 CTestTestfile.cmake
 develop-eggs/
 dist/
+docs/_build/
 dlldata.c
 DocProject/buildhelp/
 DocProject/Help/*.hhc
@@ -280,6 +281,8 @@ project.fragment.lock.json
 project.lock.json
 publish/
 PublishScripts/
+quality_dashboard/
+quality_metrics/
 rcf/
 ScaffoldingReadMe.txt
 sdist/

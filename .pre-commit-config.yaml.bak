@@ -1,0 +1,90 @@
+# Pre-commit hooks for vexy-markliff - Enhanced Quality Gates
+# Install: pre-commit install
+# Run on all files: pre-commit run --all-files
+
+repos:
+  # Generic file checks
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+  - id: trailing-whitespace
+    args: [--markdown-linebreak-ext=md]
+  - id: end-of-file-fixer
+  - id: check-yaml
+    args: [--unsafe]      # Allow custom YAML tags
+  - id: check-toml
+  - id: check-json
+  - id: check-merge-conflict
+  - id: check-added-large-files
+    args: [--maxkb=1000]
+  - id: detect-private-key
+  - id: check-case-conflict
+  - id: mixed-line-ending
+    args: [--fix=lf]
+  - id: check-ast
+  - id: check-builtin-literals
+  - id: check-docstring-first
+  - id: debug-statements
+  - id: name-tests-test
+    args: [--pytest-test-first]
+
+  # Python code formatting and linting (updated to latest)
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.9.7
+  hooks:
+      # Linter with auto-fix
+  - id: ruff
+    args: [--fix, --exit-non-zero-on-fix]
+    types_or: [python, pyi, jupyter]
+      # Formatter
+  - id: ruff-format
+    args: [--respect-gitignore]
+    types_or: [python, pyi, jupyter]
+
+  # Type checking with strict configuration
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.13.0
+  hooks:
+  - id: mypy
+    args: [--strict, --ignore-missing-imports, --warn-unreachable]
+    additional_dependencies: [types-PyYAML, lxml-stubs, pydantic, types-requests]
+    exclude: ^(tests/|examples/|scripts/)
+
+  # Security scanning
+- repo: https://github.com/PyCQA/bandit
+  rev: 1.8.6
+  hooks:
+  - id: bandit
+    args: [-c, pyproject.toml, -r, src/]
+    additional_dependencies: ['bandit[toml]']
+    exclude: ^tests/
+
+  # Dependency vulnerability scanning
+- repo: local
+  hooks:
+  - id: safety
+    name: safety-check
+    entry: uvx safety
+    language: system
+    args: [check, --json, --ignore, '70612']      # Ignore known false positive
+    types: [python]
+    pass_filenames: false
+
+  # Documentation and markdown formatting
+- repo: https://github.com/igorshubovych/markdownlint-cli
+  rev: v0.43.0
+  hooks:
+  - id: markdownlint
+    args: [--fix, --disable, MD013, MD041]      # Allow long lines and missing title
+
+  # YAML formatting
+- repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+  rev: v2.15.0
+  hooks:
+  - id: pretty-format-yaml
+    args: [--autofix, --indent=2]
+
+# Global configuration
+default_stages: [pre-commit]
+fail_fast: false
+minimum_pre_commit_version: 3.0.0

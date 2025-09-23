@@ -1,0 +1,64 @@
+version: 2
+updates:
+  # Enable version updates for Python
+- package-ecosystem: pip
+  directory: /
+  schedule:
+    interval: weekly
+    day: monday
+    time: 04:00
+  open-pull-requests-limit: 5
+  assignees:
+  - adam
+  reviewers:
+  - adam
+  commit-message:
+    prefix: deps
+    prefix-development: deps-dev
+    include: scope
+  labels:
+  - dependencies
+  - python
+  groups:
+      # Group all development dependencies together
+    development-dependencies:
+      dependency-type: development
+      patterns:
+      - pytest*
+      - ruff
+      - mypy
+      - sphinx*
+      # Group all testing dependencies
+    testing-dependencies:
+      patterns:
+      - pytest*
+      - hypothesis
+      - coverage
+      # Group all documentation dependencies
+    documentation-dependencies:
+      patterns:
+      - sphinx*
+      - myst-parser
+  ignore:
+      # Don't auto-update major versions of critical dependencies
+  - dependency-name: pydantic
+    update-types: [version-update:semver-major]
+  - dependency-name: lxml
+    update-types: [version-update:semver-major]
+
+  # Enable version updates for GitHub Actions
+- package-ecosystem: github-actions
+  directory: /
+  schedule:
+    interval: weekly
+    day: monday
+    time: 05:00
+  open-pull-requests-limit: 3
+  assignees:
+  - adam
+  commit-message:
+    prefix: ci
+    include: scope
+  labels:
+  - ci/cd
+  - github-actions

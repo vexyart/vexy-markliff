@@ -3,60 +3,72 @@
 
 from __future__ import annotations
 
-import logging
-
 import pytest
 
-from vexy_markliff import Config, __version__, process_data
+from vexy_markliff import VexyMarkliff, __version__
 
 
-def test_version_and_config_are_exposed() -> None:
-    """Package exposes metadata and core helpers at the top level."""
-
+def test_version_is_exposed() -> None:
+    """Package exposes version metadata."""
     assert __version__
-    assert Config(name="sample", value="demo")
+    assert isinstance(__version__, str)
+    assert len(__version__) > 0
 
 
-def test_process_data_when_values_then_returns_summary() -> None:
-    """process_data normalises values and reports summary statistics."""
-
-    config = Config(name="summary", value="baseline", options={"mode": "count"})
-    result = process_data([" alpha ", "beta", "alpha"], config=config)
-
-    assert result["items"] == ["alpha", "beta", "alpha"]
-    assert result["summary"] == {"total": 3, "unique": 2}
-    assert result["count"] == 3
-    assert result["unique"] == 2
-    assert result["frequency"] == {"alpha": 2, "beta": 1}
-    assert result["config"] == {
-        "name": "summary",
-        "value": "baseline",
-        "options": {"mode": "count"},
-    }
+def test_main_converter_can_be_imported() -> None:
+    """Main VexyMarkliff converter can be imported and instantiated."""
+    converter = VexyMarkliff()
+    assert converter is not None
 
 
-def test_process_data_when_not_list_then_raises_type_error() -> None:
-    """Non-list inputs are rejected to keep behaviour predictable."""
+def test_basic_markdown_to_xliff_conversion() -> None:
+    """Basic Markdown to XLIFF conversion works."""
+    converter = VexyMarkliff()
+    markdown = "# Hello World\n\nThis is a test."
 
-    with pytest.raises(TypeError) as exc:
-        process_data({"alpha": 1})  # type: ignore[arg-type]
-
-    assert "data must be provided as a list" in str(exc.value)
-
-
-def test_process_data_when_empty_inputs_then_raises_value_error() -> None:
-    """Empty or blank-only inputs raise a descriptive error."""
-
-    with pytest.raises(ValueError) as exc:
-        process_data([" ", "\n\t"])
-
-    assert "at least one non-empty item" in str(exc.value)
+    # This should not raise an exception
+    xliff = converter.markdown_to_xliff(markdown, "en", "es")
+    assert xliff is not None
+    assert isinstance(xliff, str)
+    assert len(xliff) > 0
+    assert "xliff" in xliff.lower()
 
 
-def test_process_data_when_debug_enabled_then_logs(caplog: pytest.LogCaptureFixture) -> None:
-    """Debug flag elevates logging level and emits helpful diagnostics."""
+def test_basic_html_to_xliff_conversion() -> None:
+    """Basic HTML to XLIFF conversion works."""
+    converter = VexyMarkliff()
+    html = "<h1>Hello World</h1><p>This is a test.</p>"
 
-    with caplog.at_level(logging.DEBUG):
-        process_data([1, 1, 2], debug=True)
+    # This should not raise an exception
+    xliff = converter.html_to_xliff(html, "en", "es")
+    assert xliff is not None
+    assert isinstance(xliff, str)
+    assert len(xliff) > 0
+    assert "xliff" in xliff.lower()
 
-    assert any("Debug mode enabled" in message for message in caplog.messages)
+
+def test_empty_content_raises_validation_error() -> None:
+    """Empty content raises appropriate validation error."""
+    from vexy_markliff.exceptions import ValidationError
+
+    converter = VexyMarkliff()
+
+    with pytest.raises(ValidationError):
+        converter.markdown_to_xliff("", "en", "es")
+
+    with pytest.raises(ValidationError):
+        converter.html_to_xliff("", "en", "es")
+
+
+def test_invalid_language_codes_raise_validation_error() -> None:
+    """Invalid language codes raise appropriate validation error."""
+    from vexy_markliff.exceptions import ValidationError
+
+    converter = VexyMarkliff()
+    content = "# Test"
+
+    with pytest.raises(ValidationError):
+        converter.markdown_to_xliff(content, "invalid", "es")
+
+    with pytest.raises(ValidationError):
+        converter.markdown_to_xliff(content, "en", "invalid")

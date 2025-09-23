@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ['3.10', '3.11', '3.12']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+      with:
+        enable-cache: true
+        cache-dependency-glob: uv.lock
+
+    - name: Set up Python ${{ matrix.python-version }}
+      run: uv python install ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        uv sync --all-extras --dev
+
+    - name: Lint with ruff
+      run: |
+        uvx ruff check src/vexy_markliff tests
+        uvx ruff format --check src/vexy_markliff tests
+
+    - name: Type check with mypy
+      run: |
+        uvx mypy src/vexy_markliff --ignore-missing-imports
+
+    - name: Security scan with bandit
+      run: |
+        uvx bandit -r src/vexy_markliff -f json -o bandit-report.json || true
+        uvx bandit -r src/vexy_markliff
+
+    - name: Dependency vulnerability scan
+      run: |
+        uvx safety check --json --ignore 70612 || true
+        uvx safety check --ignore 70612
+
+    - name: Test with pytest (with coverage quality gates)
+      run: |
+        uv run pytest tests/ --cov=src/vexy_markliff --cov-report=xml --cov-report=term-missing --cov-fail-under=80 -v
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4
+      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        token: ${{ secrets.CODECOV_TOKEN }}
+
+    - name: Performance regression check
+      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
+      run: |
+        uv run python scripts/benchmark_imports.py
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Set up Python
+      run: uv python install 3.12
+
+    - name: Build package
+      run: |
+        uv build
+
+    - name: Check distribution
+      run: |
+        uv run twine check dist/*
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist
+        path: dist/

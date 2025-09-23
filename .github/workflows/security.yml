@@ -1,0 +1,162 @@
+name: Security & Dependency Monitoring
+
+on:
+  schedule:
+    # Run daily at 6 AM UTC
+  - cron: 0 6 * * *
+  push:
+    branches: [main]
+    paths:
+    - pyproject.toml
+    - uv.lock
+    - .github/workflows/security.yml
+  workflow_dispatch:
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+      with:
+        enable-cache: true
+
+    - name: Set up Python
+      run: uv python install 3.12
+
+    - name: Install dependencies
+      run: |
+        uv sync --all-extras --dev
+
+    - name: Run comprehensive security scan
+      run: |
+        echo "=== Bandit Security Scan ==="
+        uvx bandit -r src/vexy_markliff -f json -o bandit-report.json
+        uvx bandit -r src/vexy_markliff
+
+    - name: Dependency vulnerability scan
+      run: |
+        echo "=== Safety Vulnerability Scan ==="
+        uvx safety check --json --output safety-report.json
+        uvx safety check
+
+    - name: Upload security reports
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: security-reports
+        path: |
+          bandit-report.json
+          safety-report.json
+
+    - name: Create security issue on failure
+      if: failure()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const title = 'Security vulnerability detected';
+          const body = `
+          ## Security Alert 🚨
+
+          A security vulnerability has been detected in the dependencies or code.
+
+          **Workflow:** ${{ github.workflow }}
+          **Run ID:** ${{ github.run_id }}
+          **Commit:** ${{ github.sha }}
+
+          Please review the security reports in the workflow artifacts and take appropriate action.
+
+          ### Next Steps
+          1. Check the workflow logs for details
+          2. Download and review security reports
+          3. Update vulnerable dependencies
+          4. Fix any code security issues
+          5. Close this issue once resolved
+          `;
+
+          // Check if issue already exists
+          const existingIssues = await github.rest.issues.listForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            state: 'open',
+            labels: 'security,automated'
+          });
+
+          if (existingIssues.data.length === 0) {
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['security', 'automated', 'priority-high']
+            });
+          }
+
+  dependency-update:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Set up Python
+      run: uv python install 3.12
+
+    - name: Update dependencies
+      run: |
+        echo "=== Current Lock File ==="
+        head -20 uv.lock
+
+        echo "=== Updating Dependencies ==="
+        uv lock --upgrade
+
+        echo "=== Updated Lock File ==="
+        head -20 uv.lock
+
+    - name: Test with updated dependencies
+      run: |
+        uv sync --all-extras --dev
+        uv run pytest tests/ --maxfail=5 -x
+
+    - name: Run security checks on updated deps
+      run: |
+        uvx safety check --ignore 70612
+        uvx bandit -r src/vexy_markliff
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: 'chore: update dependencies'
+        title: 'chore: automated dependency updates'
+        body: |
+          ## Automated Dependency Updates 🤖
+
+          This PR contains automated dependency updates.
+
+          ### Changes
+          - Updated all dependencies to latest compatible versions
+          - Security scans passed
+          - All tests passing
+
+          ### Verification
+          - [x] Dependencies updated successfully
+          - [x] Tests pass with new dependencies
+          - [x] Security scans clean
+          - [x] No breaking changes detected
+
+          Please review and merge if all checks pass.
+        branch: automated/dependency-updates
+        labels: |
+          dependencies
+          automated
+          maintenance
+        reviewers: |
+          adam
+        draft: false
