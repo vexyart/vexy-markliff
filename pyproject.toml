@@ -33,6 +33,12 @@ classifiers = [
 ]
 
 dependencies = [
+    "fire>=0.7.1",
+    "lxml>=6.0.2",
+    "markdown-it-py>=3.0.0",
+    "pydantic>=2.11.9",
+    "pyyaml>=6.0.2",
+    "rich>=14.1.0",
 ]
 
 # Author information
@@ -66,14 +72,11 @@ dev = [
     'isort>=6.0.1', # Sort imports - Keep isort as is, update if newer isort version is required
 ]
 
-# Testing tools and frameworks
+# Testing tools and frameworks (simplified)
 test = [
-    'pytest>=8.3.4', # Testing framework - Keep pytest as is, update if newer pytest version is required
-    'pytest-cov>=6.0.0', # Coverage plugin for pytest - Keep pytest-cov as is, update if newer pytest-cov version is required
-    'pytest-xdist>=3.6.1', # Parallel test execution - Keep pytest-xdist as is, update if newer pytest-xdist version is required
-    'pytest-benchmark[histogram]>=5.1.0', # Benchmarking plugin - Keep pytest-benchmark as is, update if newer pytest-benchmark version is required
-    'pytest-asyncio>=0.25.3', # Async test support - Keep pytest-asyncio as is, update if newer pytest-asyncio version is required
-    'coverage[toml]>=7.6.12',
+    'pytest>=8.3.4', # Basic testing framework
+    'pytest-cov>=6.0.0', # Coverage plugin for pytest
+    'coverage[toml]>=7.6.12', # Coverage reporting
 ]
 
 docs = [
@@ -92,7 +95,7 @@ all = [
 # Entry points for command-line executables installed with the package.
 #------------------------------------------------------------------------------
 [project.scripts]
-# CLINAME = "vexy_markliff.__main__:main"
+vexy-markliff = "vexy_markliff.cli:main"
 
 #------------------------------------------------------------------------------
 # BUILD SYSTEM CONFIGURATION
@@ -179,7 +182,7 @@ python = ["3.10", "3.11", "3.12"]
 # Dedicated environment for linting and code quality checks
 [tool.hatch.envs.lint]
 detached = true # Create a separate, isolated environment
-features = ['dev'] # Use dev extras  dependencies 
+features = ['dev'] # Use dev extras  dependencies
 
 # Linting environment commands
 [tool.hatch.envs.lint.scripts]
@@ -273,23 +276,54 @@ omit = [
 #------------------------------------------------------------------------------
 
 [tool.mypy]
+# Enhanced strict type checking configuration
 python_version = "3.10"
+strict = true
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
-check_untyped_defs = true
+disallow_untyped_calls = true
 disallow_untyped_decorators = true
+disallow_any_generics = true
+disallow_any_unimported = true
+disallow_any_expr = false  # Too strict for most codebases
+disallow_any_decorated = false  # Too strict for decorators
+disallow_any_explicit = false  # Allow explicit Any when needed
+disallow_subclassing_any = true
+check_untyped_defs = true
 no_implicit_optional = true
+no_implicit_reexport = true
+strict_optional = true
+strict_equality = true
 warn_redundant_casts = true
 warn_unused_ignores = true
 warn_no_return = true
 warn_unreachable = true
+show_error_codes = true
+show_column_numbers = true
+pretty = true
+
+# All strict type checking options configured above
 
 [[tool.mypy.overrides]]
 module = ["tests.*"]
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
+disallow_untyped_calls = false
+disallow_any_generics = false
+
+[[tool.mypy.overrides]]
+module = ["external.*"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ["build.*", "dist.*", "*.egg-info.*"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ["fire"]
+ignore_missing_imports = true
 
 #------------------------------------------------------------------------------
 # PYTEST CONFIGURATION
@@ -308,14 +342,14 @@ markers = [
     "benchmark: marks tests as benchmarks (select with '-m benchmark')",
     "unit: mark a test as a unit test",
     "integration: mark a test as an integration test",
-    "permutation: tests for permutation functionality", 
+    "permutation: tests for permutation functionality",
     "parameter: tests for parameter parsing",
     "prompt: tests for prompt parsing",
 ]
 norecursedirs = [
     ".*",
     "build",
-    "dist", 
+    "dist",
     "venv",
     "__pycache__",
     "*.egg-info",
@@ -346,7 +380,7 @@ compare = [
 #------------------------------------------------------------------------------
 # RUFF CONFIGURATION
 # Configuration for Ruff, including linter and formatter settings.
-#------------------------------------------------------------------------------ 
+#------------------------------------------------------------------------------
 
 # Ruff linter and formatter configuration
 [tool.ruff]
@@ -437,3 +471,10 @@ ban-relative-imports = 'all' # Ban all relative imports for consistency
     'TID252'
     # Allow relative imports in tests for convenience
 ]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.18.2",
+    "ruff>=0.13.1",
+]
+test = []

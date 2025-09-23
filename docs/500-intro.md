@@ -32,7 +32,7 @@ The XLIFF 2.1 standard defines a clear and logical hierarchy of elements that fo
 
 * **`<source>` and `<target>`**: These are the simplest and most fundamental elements, residing within a `<segment>`. The `<source>` element contains the original text to be translated, and the `<target>` element holds its translation. These elements contain not only plain text but also the inline elements (`<pc>`, `<ph>`, `<mrk>`) that represent formatting and other markup from the source document.
 
-The distinction between the immutable high-level structure and the malleable segmentation within it is a deliberate and powerful design feature of XLIFF 2.1. The specification's strict hierarchy and the prohibition on modifying the `<unit>` structure ensure that an automated merger agent can always reconstruct the target document correctly by re-inserting the translated units into their original positions within the skeleton. At the same time, the ability for CAT tools to split or join `<segment>` elements within a `<unit>` empowers translators to work with more logical and contextually appropriate chunks of text, improving translation quality and efficiency. 
+The distinction between the immutable high-level structure and the malleable segmentation within it is a deliberate and powerful design feature of XLIFF 2.1. The specification's strict hierarchy and the prohibition on modifying the `<unit>` structure ensure that an automated merger agent can always reconstruct the target document correctly by re-inserting the translated units into their original positions within the skeleton. At the same time, the ability for CAT tools to split or join `<segment>` elements within a `<unit>` empowers translators to work with more logical and contextually appropriate chunks of text, improving translation quality and efficiency.
 
 ## 3. Mechanisms for Representing Inline Markup
 
@@ -40,7 +40,7 @@ The primary challenge when extracting content from formats like HTML and Markdow
 
 ### 3.1. XLIFF 2
 
-XLIFF 1.2 relied on a set of generic tags such as `<bpt>` (begin paired tag), `<ept>` (end paired tag), `<ph>` (placeholder), and `<it>` (isolated tag) to represent inline markup. While functional, this system could be cumbersome and less intuitive. 
+XLIFF 1.2 relied on a set of generic tags such as `<bpt>` (begin paired tag), `<ept>` (end paired tag), `<ph>` (placeholder), and `<it>` (isolated tag) to represent inline markup. While functional, this system could be cumbersome and less intuitive.
 
 XLIFF 2.0 introduced a completely redesigned model, which is carried forward in 2.1, centered around three primary inline elements: `<ph>` (placeholder), `<pc>` (paired code), and the annotation-focused `<mrk>` (marker). This modern approach more clearly distinguishes between different types of inline content, simplifying both the extraction and translation processes.
 
@@ -179,7 +179,7 @@ An XLIFF 2.1 Extractor following our approach would generate:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" 
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0"
        xmlns:fs="urn:oasis:names:tc:xliff:fs:2.0"
        version="2.1" srcLang="en" trgLang="es">
     <file id="f1" original="index.html">
@@ -198,9 +198,9 @@ An XLIFF 2.1 Extractor following our approach would generate:
         </unit>
         <unit id="u3" fs:fs="p">
             <segment>
-                <source>Please visit <mrk id="m1" fs:fs="a" 
+                <source>Please visit <mrk id="m1" fs:fs="a"
                     fs:subFs="href,https://example.com">our website</mrk> for more details.</source>
-                <target>Por favor, visite <mrk id="m1" fs:fs="a" 
+                <target>Por favor, visite <mrk id="m1" fs:fs="a"
                     fs:subFs="href,https://example.com">nuestro sitio web</mrk> para más detalles.</target>
             </segment>
         </unit>
@@ -216,5 +216,4 @@ In this example:
 * The namespace is correctly set to `urn:oasis:names:tc:xliff:document:2.0` with the Format Style namespace
 * No `<pc>` elements or `dataRefStart`/`dataRefEnd` attributes are used - instead we rely on Format Style
 
-This approach provides a consistent, standardized method for handling all HTML elements while maintaining near-perfect round-trip fidelity. 
-
+This approach provides a consistent, standardized method for handling all HTML elements while maintaining near-perfect round-trip fidelity.
