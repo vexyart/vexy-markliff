@@ -2,6 +2,8 @@
 
 A Python package and CLI tool for bidirectional conversion between Markdown/HTML and XLIFF 2.1 format, enabling high-fidelity localization workflows.
 
+**Documentation:** https://vexy.dev/vexy-markliff/
+
 ## Features
 
 - **Bidirectional Conversion**: Seamless Markdown ↔ XLIFF and HTML ↔ XLIFF conversion
@@ -217,12 +219,9 @@ python -m pytest -xvs
 
 ## Documentation
 
-Full documentation is available in the `docs/` folder:
+Full documentation: https://vexy.dev/vexy-markliff/
 
-- `500-intro.md` - Introduction to HTML-XLIFF handling
-- `510-512-prefs-html*.md` - HTML element handling specifications
-- `513-prefs-md.md` - Markdown element handling specifications
-- `530-vexy-markliff-spec.md` - Complete technical specification
+The sources are in `src_docs/md/` (build with `src_docs/build.sh`). The design notes that used to live in `docs/` (HTML and Markdown mapping rules, the XLIFF primer, segmentation research) are now in the [Design notes](https://vexy.dev/vexy-markliff/design/) section.
 
 ## Contributing
 

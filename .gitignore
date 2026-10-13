@@ -301,3 +301,9 @@ wheels/
 x64/
 x86/
 ~$*
+
+# Added for docs/packaging hygiene
+.omc/
+site/
+target/
+src/vexy_markliff/__version__.py

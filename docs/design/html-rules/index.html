@@ -1,0 +1,1686 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Convert Markdown and HTML to XLIFF and back, from the command line or from Python.">
+      
+      
+      
+        <link rel="canonical" href="https://vexy.dev/vexy-markliff/design/html-rules/">
+      
+      
+        <link rel="prev" href="../xliff-primer/">
+      
+      
+        <link rel="next" href="../markdown-rules/">
+      
+      
+        
+      
+      
+      
+      
+        
+        
+        
+          <link rel="icon" href="../../assets/images/favicon.png">
+        
+      
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-materialx-10.1.8">
+    
+    
+      
+        <title>HTML mapping rules - vexy-markliff</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.314bbef5.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a45159b5.min.css">
+      
+    
+    
+
+    
+
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" data-mx-topbar="glass">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="toc" type="checkbox" id="__toc" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <label class="md-overlay" for="__toc"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#html-mapping-rules" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="vexy-markliff" class="md-header__button md-logo" aria-label="vexy-markliff" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            vexy-markliff
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              HTML mapping rules
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.25 2a8.25 8.25 0 0 1 6.34 13.53l5.69 5.69a.749.749 0 0 1-.326 1.275.75.75 0 0 1-.734-.215l-5.69-5.69A8.25 8.25 0 1 1 10.25 2M3.5 10.25a6.75 6.75 0 1 0 13.5 0 6.75 6.75 0 0 0-13.5 0"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.25 2a8.25 8.25 0 0 1 6.34 13.53l5.69 5.69a.749.749 0 0 1-.326 1.275.75.75 0 0 1-.734-.215l-5.69-5.69A8.25 8.25 0 1 1 10.25 2M3.5 10.25a6.75 6.75 0 1 0 13.5 0 6.75 6.75 0 0 0-13.5 0"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vexyart/vexy-markliff" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vexyart/vexy-markliff
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="vexy-markliff" class="md-nav__button md-logo" aria-label="vexy-markliff" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    vexy-markliff
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vexyart/vexy-markliff" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vexyart/vexy-markliff
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Command line
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../output-format/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XLIFF output
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Design notes
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../xliff-primer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XLIFF 2.1 primer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTML mapping rules
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTML mapping rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc">
+      
+        <li class="md-nav__item">
+  <a href="#namespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Namespaces
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attribute-encoding-in-fssubfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attribute encoding in fs:subFs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#document-skeleton" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Document skeleton
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sectioning-and-grouping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sectioning and grouping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#text-blocks-and-headings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text blocks and headings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inline-text-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inline text semantics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#void-elements-and-placeholders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Void elements and placeholders
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#embedded-media" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Embedded media
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#forms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scripts-templates-and-custom-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scripts, templates and custom elements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deprecated-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deprecated elements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attributes-that-matter-for-localization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes that matter for localization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#element-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Element reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../markdown-rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markdown mapping rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../segmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sentence segmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Libraries and tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../samples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sample files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc">
+      
+        <li class="md-nav__item">
+  <a href="#namespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Namespaces
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attribute-encoding-in-fssubfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attribute encoding in fs:subFs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#document-skeleton" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Document skeleton
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sectioning-and-grouping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sectioning and grouping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#text-blocks-and-headings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text blocks and headings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inline-text-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inline text semantics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#void-elements-and-placeholders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Void elements and placeholders
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#embedded-media" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Embedded media
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#forms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scripts-templates-and-custom-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scripts, templates and custom elements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deprecated-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deprecated elements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attributes-that-matter-for-localization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes that matter for localization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#element-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Element reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+  
+
+
+<h1 id="html-mapping-rules">HTML mapping rules<a class="headerlink" href="#html-mapping-rules" title="Permanent link">&para;</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Specification</p>
+<p>These rules describe the planned extractor. Version 1.3 extracts plain text nodes only; see <a href="../../output-format/">XLIFF output</a>.</p>
+</div>
+<p>The rules decide, for every HTML5 element, whether it stays in the skeleton, becomes a <code>&lt;unit&gt;</code> or <code>&lt;group&gt;</code>, becomes an inline <code>&lt;mrk&gt;</code>, or becomes a <code>&lt;ph&gt;</code> placeholder. All of them rely on the Format Style attributes <code>fs:fs</code> and <code>fs:subFs</code> to remember the original element and its attributes.</p>
+<h2 id="namespaces">Namespaces<a class="headerlink" href="#namespaces" title="Permanent link">&para;</a></h2>
+<p>Every generated <code>&lt;xliff&gt;</code> root declares:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">&lt;xliff</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">"urn:oasis:names:tc:xliff:document:2.0"</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">       </span><span class="na">xmlns:fs=</span><span class="s">"urn:oasis:names:tc:xliff:fs:2.0"</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">       </span><span class="na">version=</span><span class="s">"2.1"</span><span class="w"> </span><span class="na">srcLang=</span><span class="s">"en"</span><span class="w"> </span><span class="na">trgLang=</span><span class="s">"de"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<h2 id="attribute-encoding-in-fssubfs">Attribute encoding in <code>fs:subFs</code><a class="headerlink" href="#attribute-encoding-in-fssubfs" title="Permanent link">&para;</a></h2>
+<p>HTML attributes are stored as name/value pairs:</p>
+<ul>
+<li><code>,</code> separates a name from its value: <code>href,https://example.com</code>.</li>
+<li><code>\</code> separates pairs: <code>class,hero\id,lead</code>.</li>
+<li>A literal comma is written <code>\,</code>; a literal backslash <code>\\</code>.</li>
+<li>An empty value is written <code>name,</code>.</li>
+</ul>
+<p>So <code>&lt;a href="https://example.com" target="_blank"&gt;</code> becomes <code>fs:fs="a" fs:subFs="href,https://example.com\target,_blank"</code>.</p>
+<p>Verbatim HTML fragments go into <code>&lt;originalData&gt;&lt;data id="…"&gt;…&lt;/data&gt;&lt;/originalData&gt;</code>, as CDATA where the fragment contains <code>&lt;</code> or <code>&amp;</code>, to avoid double escaping.</p>
+<h2 id="document-skeleton">Document skeleton<a class="headerlink" href="#document-skeleton" title="Permanent link">&para;</a></h2>
+<p>Elements: <code>&lt;!DOCTYPE&gt;</code>, <code>html</code>, <code>head</code>, <code>body</code>, <code>base</code>, <code>link</code>, <code>meta</code>, <code>script</code>, <code>style</code>, <code>noscript</code>, <code>template</code>.</p>
+<p>These stay in the skeleton file referenced by <code>&lt;file&gt;&lt;skeleton href="…"/&gt;</code>. Placeholders such as <code>###u17###</code> mark where units go back in. Only text inside child elements described below (for example <code>&lt;title&gt;</code>) is promoted to units.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"en"</span><span class="p">&gt;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"utf-8"</span> <span class="p">/&gt;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>###u1###<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"styles.css"</span> <span class="p">/&gt;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  <span class="p">&lt;</span><span class="nt">body</span> <span class="na">class</span><span class="o">=</span><span class="s">"landing"</span><span class="p">&gt;</span>###u2###<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+<h2 id="sectioning-and-grouping">Sectioning and grouping<a class="headerlink" href="#sectioning-and-grouping" title="Permanent link">&para;</a></h2>
+<p>Elements: <code>article</code>, <code>aside</code>, <code>details</code>, <code>dialog</code>, <code>div</code>, <code>fieldset</code>, <code>figure</code>, <code>figcaption</code>, <code>footer</code>, <code>header</code>, <code>main</code>, <code>menu</code>, <code>nav</code>, <code>section</code>, <code>summary</code>.</p>
+<ul>
+<li>Wrap each section in a <code>&lt;group&gt;</code> or <code>&lt;unit&gt;</code> with <code>fs:fs</code> set to the element name and attributes in <code>fs:subFs</code>.</li>
+<li>Keep purely structural wrappers (a <code>&lt;div&gt;</code> that holds only blocks) in the skeleton and promote only the child blocks.</li>
+<li>Promote text-bearing elements (<code>figcaption</code>, <code>summary</code>, <code>dialog</code>) to units.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">&lt;group</span><span class="w"> </span><span class="na">id=</span><span class="s">"nav"</span><span class="w"> </span><span class="na">fs:fs=</span><span class="s">"nav"</span><span class="w"> </span><span class="na">fs:subFs=</span><span class="s">"class,main-menu"</span><span class="nt">&gt;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&lt;unit</span><span class="w"> </span><span class="na">id=</span><span class="s">"nav-title"</span><span class="w"> </span><span class="na">fs:fs=</span><span class="s">"h2"</span><span class="nt">&gt;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&lt;segment&gt;&lt;source&gt;</span>Site<span class="w"> </span>navigation<span class="nt">&lt;/source&gt;&lt;/segment&gt;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="nt">&lt;/unit&gt;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nt">&lt;/group&gt;</span>
+</code></pre></div>
+<h2 id="lists">Lists<a class="headerlink" href="#lists" title="Permanent link">&para;</a></h2>
+<p>Elements: <code>ul</code>, <code>ol</code>, <code>li</code>, <code>menu</code>, <code>dl</code>, <code>dt</code>, <code>dd</code>.</p>
+<ul>
+<li>Each list container becomes a <code>&lt;group&gt;</code> with <code>fs:fs</code> set to the container element.</li>
+<li>Each <code>li</code>, <code>dt</code> and <code>dd</code> becomes a child <code>&lt;unit&gt;</code>.</li>
+<li>List attributes (<code>start</code>, <code>type</code>, <code>reversed</code>, <code>value</code>) go into <code>fs:subFs</code>.</li>
+<li>Nested lists become nested groups.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">&lt;group</span><span class="w"> </span><span class="na">id=</span><span class="s">"faq"</span><span class="w"> </span><span class="na">fs:fs=</span><span class="s">"dl"</span><span class="nt">&gt;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&lt;unit</span><span class="w"> </span><span class="na">id=</span><span class="s">"q1"</span><span class="w"> </span><span class="na">fs:fs=</span><span class="s">"dt"</span><span class="nt">&gt;&lt;segment&gt;&lt;source&gt;</span>What<span class="w"> </span>is<span class="w"> </span>Markliff?<span class="nt">&lt;/source&gt;&lt;/segment&gt;&lt;/unit&gt;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&lt;unit</span><span class="w"> </span><span class="na">id=</span><span class="s">"a1"</span><span class="w"> </span><span class="na">fs:fs=</span><span class="s">"dd"</span><span class="nt">&gt;&lt;segment&gt;&lt;source&gt;</span>It<span class="w"> </span>is<span class="w"> </span>our<span class="w"> </span>HTML<span class="w"> </span>to<span class="w"> </span>XLIFF<span class="w"> </span>bridge.<span class="nt">&lt;/source&gt;&lt;/segment&gt;&lt;/unit&gt;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nt">&lt;/group&gt;</span>
+</code></pre></div>
+<h2 id="tables">Tables<a class="headerlink" href="#tables" title="Permanent link">&para;</a></h2>
+<p>Elements: <code>table</code>, <code>caption</code>, <code>colgroup</code>, <code>col</code>, <code>thead</code>, <code>tbody</code>, <code>tfoot</code>, <code>tr</code>, <code>th</code>, <code>td</code>.</p>
+<ul>
+<li>By default keep the whole table in one <code>&lt;unit fs:fs="table" xml:space="preserve"&gt;</code>, with table attributes in <code>fs:subFs</code>.</li>
+<li>When cells must be translated one by one, break the table into child units and keep the outer markup in <code>&lt;originalData&gt;</code>.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">&lt;unit</span><span class="w"> </span><span class="na">id=</span><span class="s">"pricing"</span><span class="w"> </span><span class="na">fs:fs=</span><span class="s">"table"</span><span class="w"> </span><span class="na">fs:subFs=</span><span class="s">"class,pricing"</span><span class="w"> </span><span class="na">xml:space=</span><span class="s">"preserve"</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&lt;segment&gt;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">&lt;source&gt;</span><span class="cp">&lt;![CDATA[&lt;table class="pricing"&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Plan&lt;/th&gt;&lt;th&gt;Price&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="cp">    &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Starter&lt;/td&gt;&lt;td&gt;$9&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;]]&gt;</span><span class="nt">&lt;/source&gt;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="nt">&lt;/segment&gt;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nt">&lt;/unit&gt;</span>
+</code></pre></div>
+<h2 id="text-blocks-and-headings">Text blocks and headings<a class="headerlink" href="#text-blocks-and-headings" title="Permanent link">&para;</a></h2>
+<p>Elements: <code>address</code>, <code>blockquote</code>, <code>caption</code>, <code>h1</code>–<code>h6</code>, <code>hgroup</code>, <code>legend</code>, <code>p</code>, <code>pre</code>, <code>title</code>.</p>
+<ul>
+<li>Each becomes a <code>&lt;unit&gt;</code> with <code>fs:fs</code> set to the element name.</li>
+<li><code>pre</code> gets <code>xml:space="preserve"</code>.</li>
+<li><code>title</code> text is a unit; its position is a skeleton placeholder.</li>
+<li><code>hgroup</code> becomes a <code>&lt;group fs:fs="hgroup"&gt;</code> around its heading units.</li>
+</ul>
+<p>Segmentation inside these units:</p>
+<ul>
+<li>An <code>&lt;s&gt;</code> element is one <code>&lt;segment&gt;</code> and is never split.</li>
+<li>A <code>&lt;p&gt;</code> is split into sentences, one <code>&lt;segment&gt;</code> per sentence. See <a href="../segmentation/">Sentence segmentation</a>.</li>
+<li>Other blocks are one segment unless the HTML already carries <code>&lt;s&gt;</code> elements.</li>
+</ul>
+<h2 id="inline-text-semantics">Inline text semantics<a class="headerlink" href="#inline-text-semantics" title="Permanent link">&para;</a></h2>
+<p>Elements: <code>a</code>, <code>abbr</code>, <code>b</code>, <code>bdi</code>, <code>bdo</code>, <code>cite</code>, <code>code</code>, <code>data</code>, <code>del</code>, <code>dfn</code>, <code>em</code>, <code>i</code>, <code>ins</code>, <code>kbd</code>, <code>label</code>, <code>mark</code>, <code>output</code>, <code>q</code>, <code>ruby</code>, <code>rb</code>, <code>rp</code>, <code>rt</code>, <code>rtc</code>, <code>s</code>, <code>samp</code>, <code>small</code>, <code>span</code>, <code>strong</code>, <code>sub</code>, <code>sup</code>, <code>time</code>, <code>u</code>, <code>var</code>.</p>
+<ul>
+<li>Each becomes a <code>&lt;mrk&gt;</code> inside the surrounding segment, with <code>fs:fs</code> set to the element and its attributes (<code>href</code>, <code>datetime</code>, <code>title</code>, <code>aria-*</code> and so on) in <code>fs:subFs</code>.</li>
+<li>Nesting is kept as it appears; the merger replays it.</li>
+<li><code>ins</code> and <code>del</code> keep change metadata such as <code>datetime</code>.</li>
+<li><code>ruby</code>, <code>rb</code>, <code>rt</code>, <code>rp</code> and <code>rtc</code> stay grouped so that ruby layout can be rebuilt.</li>
+<li><code>lang</code>, <code>dir</code> and <code>translate</code> stay on the marker. <code>bdi</code> and <code>bdo</code> always keep <code>dir</code>; if it is absent, record <code>dir,auto</code>.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">&lt;segment&gt;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&lt;source&gt;</span>View<span class="w"> </span>the<span class="w"> </span><span class="nt">&lt;mrk</span><span class="w"> </span><span class="na">id=</span><span class="s">"m1"</span><span class="w"> </span><span class="na">fs:fs=</span><span class="s">"a"</span><span class="w"> </span><span class="na">fs:subFs=</span><span class="s">"href,https://example.com\target,_blank"</span><span class="nt">&gt;</span>documentation<span class="nt">&lt;/mrk&gt;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>updated<span class="w"> </span>on<span class="w"> </span><span class="nt">&lt;mrk</span><span class="w"> </span><span class="na">id=</span><span class="s">"m2"</span><span class="w"> </span><span class="na">fs:fs=</span><span class="s">"time"</span><span class="w"> </span><span class="na">fs:subFs=</span><span class="s">"datetime,2024-05-12"</span><span class="nt">&gt;</span>May<span class="w"> </span>12<span class="nt">&lt;/mrk&gt;</span>.<span class="nt">&lt;/source&gt;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nt">&lt;/segment&gt;</span>
+</code></pre></div>
+<h2 id="void-elements-and-placeholders">Void elements and placeholders<a class="headerlink" href="#void-elements-and-placeholders" title="Permanent link">&para;</a></h2>
+<p>Elements: <code>area</code>, <code>base</code>, <code>br</code>, <code>col</code>, <code>embed</code>, <code>hr</code>, <code>img</code>, <code>input</code>, <code>link</code>, <code>meta</code>, <code>param</code>, <code>source</code>, <code>track</code>, <code>wbr</code>.</p>
+<ul>
+<li>Each occurrence becomes <code>&lt;ph&gt;</code> with <code>dataRef</code> pointing to an <code>&lt;originalData&gt;</code> entry that holds the literal HTML.</li>
+<li><code>base</code>, <code>link</code> and <code>meta</code> normally stay in the skeleton; the placeholder rule covers them when they appear in mixed content, for example raw HTML in Markdown.</li>
+<li>Placeholder ids are deterministic (for example <code>ph-img-001</code>) so that the merger can match them.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">&lt;unit</span><span class="w"> </span><span class="na">id=</span><span class="s">"hero-copy"</span><span class="w"> </span><span class="na">fs:fs=</span><span class="s">"p"</span><span class="nt">&gt;</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&lt;originalData&gt;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&lt;data</span><span class="w"> </span><span class="na">id=</span><span class="s">"img1"</span><span class="nt">&gt;</span><span class="ni">&amp;lt;</span>img<span class="w"> </span>src="hero.png"<span class="w"> </span>alt="Dashboard<span class="w"> </span>screenshot"<span class="w"> </span>width="640"<span class="w"> </span>height="320"/<span class="ni">&amp;gt;</span><span class="nt">&lt;/data&gt;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="nt">&lt;data</span><span class="w"> </span><span class="na">id=</span><span class="s">"br1"</span><span class="nt">&gt;</span><span class="ni">&amp;lt;</span>br/<span class="ni">&amp;gt;</span><span class="nt">&lt;/data&gt;</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">&lt;/originalData&gt;</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="nt">&lt;segment&gt;</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="nt">&lt;source&gt;&lt;ph</span><span class="w"> </span><span class="na">id=</span><span class="s">"ph-img1"</span><span class="w"> </span><span class="na">dataRef=</span><span class="s">"img1"</span><span class="nt">/&gt;</span><span class="w"> </span>Experience<span class="w"> </span>Markliff<span class="w"> </span>today.<span class="nt">&lt;ph</span><span class="w"> </span><span class="na">id=</span><span class="s">"ph-br1"</span><span class="w"> </span><span class="na">dataRef=</span><span class="s">"br1"</span><span class="nt">/&gt;&lt;/source&gt;</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">&lt;/segment&gt;</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="nt">&lt;/unit&gt;</span>
+</code></pre></div>
+<h2 id="embedded-media">Embedded media<a class="headerlink" href="#embedded-media" title="Permanent link">&para;</a></h2>
+<p>Elements: <code>audio</code>, <code>video</code>, <code>canvas</code>, <code>iframe</code>, <code>map</code>, <code>object</code>, <code>picture</code>, <code>svg</code>, <code>math</code>, and their children <code>area</code>, <code>source</code>, <code>track</code>, <code>param</code>.</p>
+<ul>
+<li>Self-contained widgets (<code>iframe</code>, <code>canvas</code>, <code>object</code>, <code>svg</code>, <code>math</code>) are stored whole in a <code>&lt;unit xml:space="preserve"&gt;</code>. SVG and MathML internals are never rewritten.</li>
+<li><code>picture</code> is a unit; its <code>source</code> children are <code>&lt;originalData&gt;</code> entries.</li>
+<li><code>map</code> is a unit; each <code>area</code> is a placeholder inside it.</li>
+<li><code>audio</code> and <code>video</code> mirror their nesting: <code>source</code> and <code>track</code> become placeholders, transcripts become child units.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">&lt;unit</span><span class="w"> </span><span class="na">id=</span><span class="s">"product-video"</span><span class="w"> </span><span class="na">fs:fs=</span><span class="s">"video"</span><span class="w"> </span><span class="na">fs:subFs=</span><span class="s">"controls,\width,640"</span><span class="w"> </span><span class="na">xml:space=</span><span class="s">"preserve"</span><span class="nt">&gt;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&lt;originalData&gt;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">&lt;data</span><span class="w"> </span><span class="na">id=</span><span class="s">"src-main"</span><span class="nt">&gt;</span><span class="ni">&amp;lt;</span>source<span class="w"> </span>src="promo.mp4"<span class="w"> </span>type="video/mp4"/<span class="ni">&amp;gt;</span><span class="nt">&lt;/data&gt;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">&lt;data</span><span class="w"> </span><span class="na">id=</span><span class="s">"trk-en"</span><span class="nt">&gt;</span><span class="ni">&amp;lt;</span>track<span class="w"> </span>kind="subtitles"<span class="w"> </span>src="promo-en.vtt"<span class="w"> </span>srclang="en"<span class="w"> </span>label="English"<span class="w"> </span>default<span class="ni">&amp;gt;</span><span class="nt">&lt;/data&gt;</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">&lt;/originalData&gt;</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nt">&lt;segment&gt;</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="nt">&lt;source&gt;&lt;ph</span><span class="w"> </span><span class="na">id=</span><span class="s">"ph-src1"</span><span class="w"> </span><span class="na">dataRef=</span><span class="s">"src-main"</span><span class="nt">/&gt;&lt;ph</span><span class="w"> </span><span class="na">id=</span><span class="s">"ph-trk1"</span><span class="w"> </span><span class="na">dataRef=</span><span class="s">"trk-en"</span><span class="nt">/&gt;&lt;/source&gt;</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="nt">&lt;/segment&gt;</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="nt">&lt;/unit&gt;</span>
+</code></pre></div>
+<h2 id="forms">Forms<a class="headerlink" href="#forms" title="Permanent link">&para;</a></h2>
+<p>Elements: <code>form</code>, <code>button</code>, <code>datalist</code>, <code>fieldset</code>, <code>input</code>, <code>label</code>, <code>legend</code>, <code>meter</code>, <code>optgroup</code>, <code>option</code>, <code>output</code>, <code>progress</code>, <code>select</code>, <code>textarea</code>.</p>
+<ul>
+<li>A whole form is kept as one <code>&lt;unit xml:space="preserve"&gt;</code> so that validation attributes survive.</li>
+<li>Visible text inside it (<code>label</code>, button captions, <code>option</code> text) becomes separate units referenced by placeholders.</li>
+<li>Void controls (<code>input</code>, <code>meter</code>, <code>progress</code>) are placeholders inside the form unit.</li>
+<li>Markdown task-list checkboxes use the same placeholder rule.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">&lt;unit</span><span class="w"> </span><span class="na">id=</span><span class="s">"contact-form"</span><span class="w"> </span><span class="na">fs:fs=</span><span class="s">"form"</span><span class="w"> </span><span class="na">fs:subFs=</span><span class="s">"action,/submit\method,POST"</span><span class="w"> </span><span class="na">xml:space=</span><span class="s">"preserve"</span><span class="nt">&gt;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&lt;segment&gt;</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="nt">&lt;source&gt;</span><span class="cp">&lt;![CDATA[&lt;form action="/submit" method="POST"&gt;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="cp">  &lt;label for="name"&gt;###u-name###&lt;/label&gt;</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="cp">  &lt;input id="name" name="name" type="text" required&gt;</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="cp">  &lt;button type="submit"&gt;###u-submit###&lt;/button&gt;</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="cp">&lt;/form&gt;]]&gt;</span><span class="nt">&lt;/source&gt;</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">  </span><span class="nt">&lt;/segment&gt;</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="nt">&lt;/unit&gt;</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="nt">&lt;unit</span><span class="w"> </span><span class="na">id=</span><span class="s">"u-name"</span><span class="w"> </span><span class="na">fs:fs=</span><span class="s">"label"</span><span class="nt">&gt;&lt;segment&gt;&lt;source&gt;</span>Name<span class="nt">&lt;/source&gt;&lt;/segment&gt;&lt;/unit&gt;</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="nt">&lt;unit</span><span class="w"> </span><span class="na">id=</span><span class="s">"u-submit"</span><span class="w"> </span><span class="na">fs:fs=</span><span class="s">"button"</span><span class="nt">&gt;&lt;segment&gt;&lt;source&gt;</span>Send<span class="nt">&lt;/source&gt;&lt;/segment&gt;&lt;/unit&gt;</span>
+</code></pre></div>
+<h2 id="scripts-templates-and-custom-elements">Scripts, templates and custom elements<a class="headerlink" href="#scripts-templates-and-custom-elements" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>script</code> stays in the skeleton. Inline JavaScript is not translated; extract user-facing strings from it (for example from JSON) before conversion.</li>
+<li><code>noscript</code> fallback text becomes a unit; the tag stays in the skeleton.</li>
+<li><code>template</code> stays in the skeleton unless it contains fallback text, which is then promoted.</li>
+<li><code>slot</code> and <code>slot="…"</code> are recorded in <code>fs:subFs</code>; fallback text in slots is ordinary inline content.</li>
+<li>Custom elements (any name with a hyphen, such as <code>app-shell</code> or <code>geo-map</code>) are treated as inline or block elements depending on their content, with the literal tag name in <code>fs:fs</code>.</li>
+</ul>
+<h2 id="deprecated-elements">Deprecated elements<a class="headerlink" href="#deprecated-elements" title="Permanent link">&para;</a></h2>
+<p><code>acronym</code>, <code>applet</code>, <code>basefont</code>, <code>big</code>, <code>blink</code>, <code>center</code>, <code>dir</code>, <code>font</code>, <code>frame</code>, <code>frameset</code>, <code>isindex</code>, <code>marquee</code>, <code>menuitem</code>, <code>noframes</code>, <code>strike</code> and <code>tt</code> are kept as written and handled like their modern counterparts (for example <code>center</code> like <code>div</code>). Their visible text is still extracted.</p>
+<h2 id="attributes-that-matter-for-localization">Attributes that matter for localization<a class="headerlink" href="#attributes-that-matter-for-localization" title="Permanent link">&para;</a></h2>
+<p>Most attributes are carried through <code>fs:subFs</code> untouched. A few carry text or localization instructions:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Relevance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lang</code></td>
+<td>Language of the content (BCP 47 tag); must change in the target</td>
+</tr>
+<tr>
+<td><code>dir</code></td>
+<td><code>ltr</code>, <code>rtl</code> or <code>auto</code>; matters for mixed-direction text</td>
+</tr>
+<tr>
+<td><code>translate</code></td>
+<td><code>yes</code> or <code>no</code>; maps to ITS Translate</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Tooltip text, often the expansion of an <code>&lt;abbr&gt;</code>; translatable</td>
+</tr>
+<tr>
+<td><code>alt</code></td>
+<td>Text alternative of an image; translatable</td>
+</tr>
+<tr>
+<td><code>aria-label</code>, <code>aria-describedby</code>, <code>aria-labelledby</code></td>
+<td>Accessible names and descriptions; <code>aria-label</code> is translatable text</td>
+</tr>
+<tr>
+<td><code>cite</code>, <code>datetime</code></td>
+<td>On <code>blockquote</code>, <code>q</code>, <code>del</code>, <code>ins</code>: source URL and ISO 8601 time</td>
+</tr>
+<tr>
+<td><code>data-*</code></td>
+<td>Script data; not translatable</td>
+</tr>
+</tbody>
+</table>
+<h2 id="element-reference">Element reference<a class="headerlink" href="#element-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Elements</th>
+<th>Handling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;!DOCTYPE&gt;</code>, <code>html</code>, <code>head</code>, <code>body</code></td>
+<td>Skeleton; child text promoted to units</td>
+</tr>
+<tr>
+<td><code>base</code>, <code>link</code>, <code>meta</code></td>
+<td>Skeleton; inline occurrences become <code>&lt;ph&gt;</code></td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Unit <code>fs:fs="title"</code>, placeholder in skeleton</td>
+</tr>
+<tr>
+<td><code>style</code>, <code>script</code></td>
+<td>Skeleton only</td>
+</tr>
+<tr>
+<td><code>noscript</code>, <code>template</code></td>
+<td>Skeleton; fallback text promoted</td>
+</tr>
+<tr>
+<td><code>article</code>, <code>aside</code>, <code>main</code>, <code>nav</code>, <code>section</code></td>
+<td>Group or unit with <code>fs:fs</code> and attributes</td>
+</tr>
+<tr>
+<td><code>header</code>, <code>footer</code>, <code>div</code></td>
+<td>Skeleton wrapper; text children promoted</td>
+</tr>
+<tr>
+<td><code>figure</code>, <code>figcaption</code></td>
+<td>Figure as group or unit; caption as unit</td>
+</tr>
+<tr>
+<td><code>details</code>, <code>summary</code>, <code>dialog</code></td>
+<td>Block kept with <code>fs:fs</code>; text children as units</td>
+</tr>
+<tr>
+<td><code>fieldset</code>, <code>legend</code></td>
+<td>Fieldset as group; legend as unit</td>
+</tr>
+<tr>
+<td><code>menu</code>, <code>ul</code>, <code>ol</code>, <code>li</code></td>
+<td>List group and item units</td>
+</tr>
+<tr>
+<td><code>dl</code>, <code>dt</code>, <code>dd</code></td>
+<td>Definition-list group, term and definition units</td>
+</tr>
+<tr>
+<td><code>p</code>, <code>address</code>, <code>blockquote</code>, <code>pre</code>, <code>caption</code></td>
+<td>Units; paragraphs split into sentences</td>
+</tr>
+<tr>
+<td><code>h1</code>–<code>h6</code>, <code>hgroup</code></td>
+<td>Units; <code>hgroup</code> as wrapping group</td>
+</tr>
+<tr>
+<td><code>span</code>, <code>mark</code>, <code>strong</code>, <code>em</code>, <code>i</code>, <code>b</code>, <code>u</code>, <code>small</code>, <code>s</code></td>
+<td><code>&lt;mrk&gt;</code></td>
+</tr>
+<tr>
+<td><code>cite</code>, <code>q</code>, <code>dfn</code>, <code>abbr</code>, <code>var</code>, <code>code</code>, <code>kbd</code>, <code>samp</code></td>
+<td><code>&lt;mrk&gt;</code></td>
+</tr>
+<tr>
+<td><code>time</code>, <code>data</code>, <code>output</code>, <code>label</code></td>
+<td><code>&lt;mrk&gt;</code> with value attributes</td>
+</tr>
+<tr>
+<td><code>sub</code>, <code>sup</code>, <code>bdi</code>, <code>bdo</code>, <code>ruby</code>, <code>rb</code>, <code>rt</code>, <code>rp</code>, <code>rtc</code></td>
+<td><code>&lt;mrk&gt;</code> with direction and ruby data</td>
+</tr>
+<tr>
+<td><code>del</code>, <code>ins</code></td>
+<td><code>&lt;mrk&gt;</code> with change metadata</td>
+</tr>
+<tr>
+<td><code>hr</code>, <code>br</code>, <code>wbr</code></td>
+<td><code>&lt;ph&gt;</code></td>
+</tr>
+<tr>
+<td><code>table</code> and its parts</td>
+<td>Preserved unit, or nested groups for cell-level work</td>
+</tr>
+<tr>
+<td><code>colgroup</code>, <code>col</code></td>
+<td>Inside the preserved table markup</td>
+</tr>
+<tr>
+<td><code>form</code></td>
+<td>Preserved unit; text children as units</td>
+</tr>
+<tr>
+<td><code>button</code></td>
+<td>Unit</td>
+</tr>
+<tr>
+<td><code>input</code>, <code>textarea</code>, <code>select</code>, <code>meter</code>, <code>progress</code></td>
+<td>Placeholders inside the form unit</td>
+</tr>
+<tr>
+<td><code>option</code>, <code>optgroup</code>, <code>datalist</code></td>
+<td>Units for visible captions</td>
+</tr>
+<tr>
+<td><code>img</code>, <code>picture</code>, <code>source</code>, <code>track</code></td>
+<td><code>&lt;ph&gt;</code> inside media units</td>
+</tr>
+<tr>
+<td><code>audio</code>, <code>video</code></td>
+<td>Units; sources and tracks as placeholders</td>
+</tr>
+<tr>
+<td><code>map</code>, <code>area</code></td>
+<td>Map as unit; areas as placeholders</td>
+</tr>
+<tr>
+<td><code>iframe</code>, <code>embed</code>, <code>object</code>, <code>param</code></td>
+<td>Unit with full markup</td>
+</tr>
+<tr>
+<td><code>canvas</code>, <code>svg</code>, <code>math</code></td>
+<td>Preserved unit; internals untouched</td>
+</tr>
+<tr>
+<td><code>slot</code>, custom elements</td>
+<td>Structure kept; fallback text promoted; tag name in <code>fs:fs</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="validation-checklist">Validation checklist<a class="headerlink" href="#validation-checklist" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Every unit created from HTML has <code>fs:fs</code> matching the original element.</li>
+<li>Every <code>&lt;ph&gt;</code> refers to an existing <code>&lt;data id="…"&gt;</code>.</li>
+<li>Each <code>&lt;s&gt;</code> maps to exactly one <code>&lt;segment&gt;</code>; paragraphs are sentence-split.</li>
+<li>When in doubt, check against the OASIS XLIFF 2.1 specification.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+          <div class="md-top" data-md-component="top" hidden>
+  <div class="md-top__center">
+    <button type="button" class="md-top__button md-top__button--main" data-md-action="top">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+      <span>Back to top</span>
+    </button>
+    
+      
+      
+      <label class="md-top__button md-top__side md-top__side--nav" for="__drawer" >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-left" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg>
+      </label>
+    
+    
+      
+      
+      <label class="md-top__button md-top__side md-top__side--toc" for="__toc" >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-right" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/></svg>
+      </label>
+    
+  </div>
+</div>
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../xliff-primer/" class="md-footer__link md-footer__link--prev" aria-label="Previous: XLIFF 2.1 primer">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                XLIFF 2.1 primer
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../markdown-rules/" class="md-footer__link md-footer__link--next" aria-label="Next: Markdown mapping rules">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Markdown mapping rules
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://jaywhj.github.io/mkdocs-materialx/" target="_blank" rel="noopener">
+      MaterialX
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "code": null, "features": ["navigation.sections", "navigation.top", "navigation.footer", "toc.follow", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "code.collapse": "Collapse", "code.download": "Download", "code.expand": "Expand remaining # lines", "code.select": "Toggle line selection", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fc193f93.min.js"></script>
+      
+    
+  </body>
+</html>

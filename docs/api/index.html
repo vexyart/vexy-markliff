@@ -1,0 +1,1557 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Convert Markdown and HTML to XLIFF and back, from the command line or from Python.">
+      
+      
+      
+        <link rel="canonical" href="https://vexy.dev/vexy-markliff/api/">
+      
+      
+        <link rel="prev" href="../cli/">
+      
+      
+        <link rel="next" href="../output-format/">
+      
+      
+        
+      
+      
+      
+      
+        
+        
+        
+          <link rel="icon" href="../assets/images/favicon.png">
+        
+      
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-materialx-10.1.8">
+    
+    
+      
+        <title>Python API - vexy-markliff</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.314bbef5.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a45159b5.min.css">
+      
+    
+    
+
+    
+
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" data-mx-topbar="glass">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="toc" type="checkbox" id="__toc" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <label class="md-overlay" for="__toc"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#python-api" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="vexy-markliff" class="md-header__button md-logo" aria-label="vexy-markliff" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            vexy-markliff
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Python API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.25 2a8.25 8.25 0 0 1 6.34 13.53l5.69 5.69a.749.749 0 0 1-.326 1.275.75.75 0 0 1-.734-.215l-5.69-5.69A8.25 8.25 0 1 1 10.25 2M3.5 10.25a6.75 6.75 0 1 0 13.5 0 6.75 6.75 0 0 0-13.5 0"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.25 2a8.25 8.25 0 0 1 6.34 13.53l5.69 5.69a.749.749 0 0 1-.326 1.275.75.75 0 0 1-.734-.215l-5.69-5.69A8.25 8.25 0 1 1 10.25 2M3.5 10.25a6.75 6.75 0 1 0 13.5 0 6.75 6.75 0 0 0-13.5 0"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vexyart/vexy-markliff" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vexyart/vexy-markliff
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="vexy-markliff" class="md-nav__button md-logo" aria-label="vexy-markliff" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    vexy-markliff
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vexyart/vexy-markliff" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vexyart/vexy-markliff
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Command line
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python API
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc">
+      
+        <li class="md-nav__item">
+  <a href="#top-level-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Top-level names
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vexymarkliff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VexyMarkliff
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VexyMarkliff">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#markdown_to_xliffcontent-source_langen-target_langes-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        markdown_to_xliff(content, source_lang="en", target_lang="es") -&gt; str
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#html_to_xliffcontent-source_langen-target_langes-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        html_to_xliff(content, source_lang="en", target_lang="es") -&gt; str
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xliff_to_markdownxliff_content-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xliff_to_markdown(xliff_content) -&gt; str
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xliff_to_htmlxliff_content-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xliff_to_html(xliff_content) -&gt; str
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversionconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ConversionConfig
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parsers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parsers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#htmlparser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTMLParser
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#markdownparser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MarkdownParser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Utilities
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../output-format/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XLIFF output
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Design notes
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/xliff-primer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XLIFF 2.1 primer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/html-rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTML mapping rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/markdown-rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markdown mapping rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/segmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sentence segmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Libraries and tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/samples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sample files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc">
+      
+        <li class="md-nav__item">
+  <a href="#top-level-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Top-level names
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vexymarkliff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VexyMarkliff
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VexyMarkliff">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#markdown_to_xliffcontent-source_langen-target_langes-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        markdown_to_xliff(content, source_lang="en", target_lang="es") -&gt; str
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#html_to_xliffcontent-source_langen-target_langes-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        html_to_xliff(content, source_lang="en", target_lang="es") -&gt; str
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xliff_to_markdownxliff_content-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xliff_to_markdown(xliff_content) -&gt; str
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xliff_to_htmlxliff_content-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xliff_to_html(xliff_content) -&gt; str
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversionconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ConversionConfig
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parsers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parsers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#htmlparser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTMLParser
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#markdownparser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MarkdownParser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Utilities
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+  
+
+
+<h1 id="python-api">Python API<a class="headerlink" href="#python-api" title="Permanent link">&para;</a></h1>
+<p>The package exposes a small API. Everything on this page exists in <code>src/vexy_markliff/</code> in version 1.3.</p>
+<h2 id="top-level-names">Top-level names<a class="headerlink" href="#top-level-names" title="Permanent link">&para;</a></h2>
+<p><code>vexy_markliff.__all__</code> lists:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Kind</th>
+<th>Defined in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>VexyMarkliff</code></td>
+<td>class</td>
+<td><code>vexy_markliff/__init__.py</code> (lazy wrapper)</td>
+</tr>
+<tr>
+<td><code>ConversionConfig</code></td>
+<td>class</td>
+<td><code>vexy_markliff/config.py</code> (lazy import)</td>
+</tr>
+<tr>
+<td><code>VexyMarkliffCLI</code></td>
+<td>class</td>
+<td><code>vexy_markliff/cli.py</code> (lazy import)</td>
+</tr>
+<tr>
+<td><code>__version__</code></td>
+<td>string</td>
+<td><code>vexy_markliff/__version__.py</code>, generated at build time</td>
+</tr>
+</tbody>
+</table>
+<p><code>ConversionConfig</code> and <code>VexyMarkliffCLI</code> are imported on first access through a module-level <code>__getattr__</code>, so <code>import vexy_markliff</code> stays fast. If <code>__version__.py</code> is missing, <code>__version__</code> is <code>"unknown"</code>.</p>
+<h2 id="vexymarkliff"><code>VexyMarkliff</code><a class="headerlink" href="#vexymarkliff" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">vexy_markliff</span><span class="w"> </span><span class="kn">import</span> <span class="n">VexyMarkliff</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">converter</span> <span class="o">=</span> <span class="n">VexyMarkliff</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<p>The top-level <code>VexyMarkliff</code> is a thin wrapper. On the first method call it imports <code>vexy_markliff.core.converter.VexyMarkliff</code> and forwards every call to it. Any attribute that the wrapper does not define is also forwarded.</p>
+<p>The <code>config</code> argument is stored and passed to the core converter, which keeps it as <code>self.config</code>. The 1.3 converter does not read any value from it; language codes come from the method arguments.</p>
+<h3 id="markdown_to_xliffcontent-source_langen-target_langes-str"><code>markdown_to_xliff(content, source_lang="en", target_lang="es") -&gt; str</code><a class="headerlink" href="#markdown_to_xliffcontent-source_langen-target_langes-str" title="Permanent link">&para;</a></h3>
+<p>Render <code>content</code> (a Markdown string) to HTML, extract text nodes and return an XLIFF document as a string.</p>
+<h3 id="html_to_xliffcontent-source_langen-target_langes-str"><code>html_to_xliff(content, source_lang="en", target_lang="es") -&gt; str</code><a class="headerlink" href="#html_to_xliffcontent-source_langen-target_langes-str" title="Permanent link">&para;</a></h3>
+<p>Parse <code>content</code> (an HTML string or fragment), extract text nodes and return an XLIFF document as a string.</p>
+<p>Both <code>*_to_xliff</code> methods:</p>
+<ol>
+<li>Raise <code>ValidationError("Content cannot be empty")</code> if <code>content</code> is empty or whitespace only.</li>
+<li>Raise <code>ValidationError</code> if <code>source_lang</code> or <code>target_lang</code> is not two lowercase ASCII letters.</li>
+<li>Wrap any other failure in <code>ConversionError</code>, with the original message appended.</li>
+</ol>
+<h3 id="xliff_to_markdownxliff_content-str"><code>xliff_to_markdown(xliff_content) -&gt; str</code><a class="headerlink" href="#xliff_to_markdownxliff_content-str" title="Permanent link">&para;</a></h3>
+<h3 id="xliff_to_htmlxliff_content-str"><code>xliff_to_html(xliff_content) -&gt; str</code><a class="headerlink" href="#xliff_to_htmlxliff_content-str" title="Permanent link">&para;</a></h3>
+<p>Parse an XLIFF string with <code>XLIFFDocument.from_xml</code> and return one <code>&lt;p&gt;…&lt;/p&gt;</code> line per unit, joined with newlines. Both methods return the same text. They raise <code>ValidationError("XLIFF content cannot be empty")</code> for empty input and wrap other failures in <code>ConversionError</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">vexy_markliff</span><span class="w"> </span><span class="kn">import</span> <span class="n">VexyMarkliff</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">vexy_markliff.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversionError</span><span class="p">,</span> <span class="n">ValidationError</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">converter</span> <span class="o">=</span> <span class="n">VexyMarkliff</span><span class="p">()</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">xliff</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">html_to_xliff</span><span class="p">(</span><span class="s2">"&lt;h1&gt;Title&lt;/h1&gt;&lt;p&gt;Body&lt;/p&gt;"</span><span class="p">,</span> <span class="s2">"en"</span><span class="p">,</span> <span class="s2">"de"</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Bad input: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">except</span> <span class="n">ConversionError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Conversion failed: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">converter</span><span class="o">.</span><span class="n">xliff_to_html</span><span class="p">(</span><span class="n">xliff</span><span class="p">))</span>
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Title<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Body<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></div>
+<h2 id="conversionconfig"><code>ConversionConfig</code><a class="headerlink" href="#conversionconfig" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">vexy_markliff</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversionConfig</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">config</span> <span class="o">=</span> <span class="n">ConversionConfig</span><span class="p">(</span><span class="n">source_language</span><span class="o">=</span><span class="s2">"en"</span><span class="p">,</span> <span class="n">target_language</span><span class="o">=</span><span class="s2">"es"</span><span class="p">,</span> <span class="n">split_sentences</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>A plain class (not a Pydantic model) with three attributes:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Default</th>
+<th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>source_language</code></td>
+<td><code>"en"</code></td>
+<td>Two lowercase letters, else <code>ValueError</code></td>
+</tr>
+<tr>
+<td><code>target_language</code></td>
+<td><code>"es"</code></td>
+<td>Two lowercase letters, else <code>ValueError</code></td>
+</tr>
+<tr>
+<td><code>split_sentences</code></td>
+<td><code>True</code></td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p><code>ConversionConfig.load(config_path=None)</code> reads a YAML file and passes its top-level keys to the constructor:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">source_language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">en</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nt">target_language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">de</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nt">split_sentences</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div>
+<p>If <code>config_path</code> is <code>None</code>, the file does not exist, or loading fails for any reason (bad YAML, unknown key, invalid code), <code>load</code> returns a default <code>ConversionConfig()</code> without raising.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The converter accepts a <code>ConversionConfig</code> but does not use it in version 1.3. The CLI has no option to load a configuration file.</p>
+</div>
+<h2 id="exceptions">Exceptions<a class="headerlink" href="#exceptions" title="Permanent link">&para;</a></h2>
+<p>All exceptions live in <code>vexy_markliff.exceptions</code> and derive from <code>VexyMarkliffError</code>, which derives from <code>Exception</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Exception</th>
+<th>Raised by the 1.3 code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>VexyMarkliffError</code></td>
+<td>Base class only</td>
+</tr>
+<tr>
+<td><code>ValidationError</code></td>
+<td>Empty content, invalid language code, malformed XLIFF in <code>XLIFFDocument.from_xml</code>, serialization failure in <code>to_xml</code></td>
+</tr>
+<tr>
+<td><code>ConversionError</code></td>
+<td>Any failure inside a converter method, wrapping the original error</td>
+</tr>
+<tr>
+<td><code>ParsingError</code></td>
+<td><code>MarkdownParser</code> and <code>HTMLParser</code> failures</td>
+</tr>
+<tr>
+<td><code>FileOperationError</code></td>
+<td>Defined, not raised</td>
+</tr>
+<tr>
+<td><code>ConfigurationError</code></td>
+<td>Defined, not raised</td>
+</tr>
+</tbody>
+</table>
+<p>A <code>ParsingError</code> raised inside a converter method reaches the caller as a <code>ConversionError</code>.</p>
+<h2 id="parsers">Parsers<a class="headerlink" href="#parsers" title="Permanent link">&para;</a></h2>
+<p><code>vexy_markliff.core</code> exports <code>MarkdownParser</code>, <code>HTMLParser</code> and the core <code>VexyMarkliff</code>.</p>
+<h3 id="htmlparser"><code>HTMLParser</code><a class="headerlink" href="#htmlparser" title="Permanent link">&para;</a></h3>
+<p><code>HTMLParser().parse(content)</code> returns a dictionary:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">vexy_markliff.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTMLParser</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">HTMLParser</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">'&lt;html&gt;&lt;head&gt;&lt;title&gt;Hi&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;p class="x"&gt;A &lt;b&gt;B&lt;/b&gt; C&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;'</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="s2">"segments"</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>        <span class="p">{</span><span class="s2">"content"</span><span class="p">:</span> <span class="s2">"Hi"</span><span class="p">,</span> <span class="s2">"translatable"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"element"</span><span class="p">:</span> <span class="s2">"title"</span><span class="p">},</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>        <span class="p">{</span><span class="s2">"content"</span><span class="p">:</span> <span class="s2">"A"</span><span class="p">,</span> <span class="s2">"translatable"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"element"</span><span class="p">:</span> <span class="s2">"p"</span><span class="p">},</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        <span class="p">{</span><span class="s2">"content"</span><span class="p">:</span> <span class="s2">"B"</span><span class="p">,</span> <span class="s2">"translatable"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"element"</span><span class="p">:</span> <span class="s2">"b"</span><span class="p">},</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="p">{</span><span class="s2">"content"</span><span class="p">:</span> <span class="s2">"C"</span><span class="p">,</span> <span class="s2">"translatable"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"element"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">},</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="p">],</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="s2">"structure"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"tag"</span><span class="p">:</span> <span class="s2">"html"</span><span class="p">,</span> <span class="s2">"attributes"</span><span class="p">:</span> <span class="p">{},</span> <span class="s2">"children_count"</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="p">}</span>
+</code></pre></div>
+<p>Each element's <code>.text</code> becomes a segment tagged with the element name. Each element's <code>.tail</code> (text after its closing tag) becomes a segment tagged <code>"text"</code>. Whitespace is collapsed to single spaces and trimmed. <code>structure</code> describes only the root element.</p>
+<p><code>HTMLParser().reconstruct(structured)</code> turns the segment list back into <code>&lt;p&gt;</code> lines.</p>
+<h3 id="markdownparser"><code>MarkdownParser</code><a class="headerlink" href="#markdownparser" title="Permanent link">&para;</a></h3>
+<p><code>MarkdownParser</code> creates a <code>markdown_it.MarkdownIt("commonmark", {"breaks": True, "html": True})</code> instance and enables the <code>table</code> and <code>strikethrough</code> rules. <code>parse(content)</code> renders HTML and hands it to <code>HTMLParser.parse</code>. <code>reconstruct</code> delegates to <code>HTMLParser.reconstruct</code>.</p>
+<h2 id="models">Models<a class="headerlink" href="#models" title="Permanent link">&para;</a></h2>
+<p><code>vexy_markliff.models</code> lazily exports three Pydantic models from <code>vexy_markliff.models.xliff</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Fields</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TranslationUnit</code></td>
+<td><code>id: str</code>, <code>source: str</code>, <code>target: str \| None = None</code>, <code>state: str = "new"</code></td>
+</tr>
+<tr>
+<td><code>XLIFFFile</code></td>
+<td><code>id: str</code>, <code>source_language: str</code>, <code>target_language: str</code>, <code>units: list[TranslationUnit]</code></td>
+</tr>
+<tr>
+<td><code>XLIFFDocument</code></td>
+<td><code>version: str = "2.1"</code>, <code>files: list[XLIFFFile]</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>XLIFFDocument(source_lang="en", target_lang="es", content=None)</code> builds one file with id <code>file_1</code> from a parser result: every segment becomes a <code>TranslationUnit</code> with id <code>unit_&lt;n&gt;</code>, numbered from 1.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>XLIFFDocument.to_xml()</code></td>
+<td>Serialize to the XML shown in <a href="../output-format/">XLIFF output</a>. Units with a non-empty <code>target</code> get a <code>&lt;target&gt;</code> element.</td>
+</tr>
+<tr>
+<td><code>XLIFFDocument.from_xml(xml)</code></td>
+<td>Parse XML back into models; reads <code>&lt;target&gt;</code> text and the <code>state</code> attribute.</td>
+</tr>
+<tr>
+<td><code>XLIFFDocument.content</code></td>
+<td>Property returning the parser-style dictionary built from unit <code>source</code> text.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">vexy_markliff.models.xliff</span><span class="w"> </span><span class="kn">import</span> <span class="n">TranslationUnit</span><span class="p">,</span> <span class="n">XLIFFDocument</span><span class="p">,</span> <span class="n">XLIFFFile</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">doc</span> <span class="o">=</span> <span class="n">XLIFFDocument</span><span class="p">(</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="n">files</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>        <span class="n">XLIFFFile</span><span class="p">(</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>            <span class="nb">id</span><span class="o">=</span><span class="s2">"file_1"</span><span class="p">,</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>            <span class="n">source_language</span><span class="o">=</span><span class="s2">"en"</span><span class="p">,</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>            <span class="n">target_language</span><span class="o">=</span><span class="s2">"de"</span><span class="p">,</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>            <span class="n">units</span><span class="o">=</span><span class="p">[</span><span class="n">TranslationUnit</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">"unit_1"</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">"Hello"</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">"Hallo"</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">"translated"</span><span class="p">)],</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>        <span class="p">)</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    <span class="p">]</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="p">)</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="nb">print</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">to_xml</span><span class="p">())</span>
+</code></pre></div>
+<h2 id="utilities">Utilities<a class="headerlink" href="#utilities" title="Permanent link">&para;</a></h2>
+<p><code>vexy_markliff.utils</code> holds helpers used by the core modules:</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>normalize_whitespace(text)</code></td>
+<td>Collapse runs of whitespace to one space and trim.</td>
+</tr>
+<tr>
+<td><code>validate_language_code(code)</code></td>
+<td><code>True</code> for two lowercase ASCII letters.</td>
+</tr>
+<tr>
+<td><code>validate_file_path(path)</code></td>
+<td><code>True</code> if the path exists and is a file.</td>
+</tr>
+<tr>
+<td><code>split_sentences_simple(text)</code></td>
+<td>Split on <code>.</code>, <code>!</code>, <code>?</code>; the punctuation is dropped. Not used by the converter.</td>
+</tr>
+<tr>
+<td><code>get_logger(name)</code></td>
+<td>Return <code>logging.getLogger(name)</code>.</td>
+</tr>
+<tr>
+<td><code>setup_logging(level="INFO")</code></td>
+<td>Call <code>logging.basicConfig</code> with a fixed format.</td>
+</tr>
+</tbody>
+</table>
+<p><code>split_sentences_simple("Dr. Who? Yes. New sentence.")</code> returns <code>['Dr', 'Who', 'Yes', 'New sentence']</code>, which shows why it is not wired into the converter.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+          <div class="md-top" data-md-component="top" hidden>
+  <div class="md-top__center">
+    <button type="button" class="md-top__button md-top__button--main" data-md-action="top">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+      <span>Back to top</span>
+    </button>
+    
+      
+      
+      <label class="md-top__button md-top__side md-top__side--nav" for="__drawer" >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-left" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg>
+      </label>
+    
+    
+      
+      
+      <label class="md-top__button md-top__side md-top__side--toc" for="__toc" >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-right" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/></svg>
+      </label>
+    
+  </div>
+</div>
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../cli/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Command line">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Command line
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../output-format/" class="md-footer__link md-footer__link--next" aria-label="Next: XLIFF output">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                XLIFF output
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://jaywhj.github.io/mkdocs-materialx/" target="_blank" rel="noopener">
+      MaterialX
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "code": null, "features": ["navigation.sections", "navigation.top", "navigation.footer", "toc.follow", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "code.collapse": "Collapse", "code.download": "Download", "code.expand": "Expand remaining # lines", "code.select": "Toggle line selection", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fc193f93.min.js"></script>
+      
+    
+  </body>
+</html>

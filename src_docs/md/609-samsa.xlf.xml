@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.1" version="2.1"><!-- this_file: samsa.xliff -->
+  <file id="samsa" srcLang="de" trgLang="en">
+    <unit id="p1">
+      <segment>
+        <source>Als Gregor Samsa eines Morgens aus unruhigen Träumen erwachte, fand er sich in
+          seinem Bett zu einem ungeheueren Ungeziefer verwandelt.</source>
+        <target>One morning, when Gregor Samsa woke from troubled dreams, he found himself
+          transformed in his bed into a horrible vermin.</target>
+      </segment>
+      <segment>
+        <source>Er lag auf seinem panzerartig harten Rücken und sah, wenn er den Kopf ein wenig hob,
+          seinen gewölbten, braunen, von bogenförmigen Versteifungen geteilten Bauch, auf dessen
+          Höhe sich die Bettdecke, zum gänzlichen Niedergleiten bereit, kaum noch erhalten konnte.</source>
+        <target>He lay on his armour-like back, and if he lifted his head a little he could see his
+          brown belly, slightly domed and divided by arches into stiff sections. The bedding was
+          hardly able to cover it and seemed ready to slide off any moment.</target>
+      </segment>
+      <segment>
+        <source>Seine vielen, im Vergleich zu seinem sonstigen Umfang kläglich dünnen Beine
+          flimmerten ihm hilflos vor den Augen.</source>
+        <target>His many legs, pitifully thin compared with the size of the rest of him, waved about
+          helplessly as he looked.</target>
+      </segment>
+    </unit>
+    <unit id="p2">
+      <segment>
+        <source>»Was ist mit mir geschehen?« dachte er.</source>
+        <target>“What’s happened to me?” he thought.</target>
+      </segment>
+      <segment>
+        <source>Es war kein Traum.</source>
+        <target>It wasn’t a dream.</target>
+      </segment>
+      <segment>
+        <source>Sein Zimmer, ein richtiges, nur etwas zu kleines Menschenzimmer, lag ruhig zwischen
+          den vier wohlbekannten Wänden.</source>
+        <target>His room, a proper human room although a little too small, lay peacefully between
+          its four familiar walls.</target>
+      </segment>
+      <segment>
+        <source>Über dem Tisch, auf dem eine auseinandergepackte Musterkollektion von Tuchwaren
+          ausgebreitet war -- Samsa war Reisender --, hing das Bild, das er vor kurzem aus einer
+          illustrierten Zeitschrift ausgeschnitten und in einem hübschen, vergoldeten Rahmen
+          untergebracht hatte.</source>
+        <target>A collection of textile samples lay spread out on the table—Samsa was a travelling
+          salesman—and above it there hung a picture that he had recently cut out of an illustrated
+          magazine and housed in a nice, gilded frame. It showed a lady fitted out with a fur hat
+          and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower
+          arm towards the viewer.</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>
