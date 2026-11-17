@@ -1,3 +1,8 @@
+---
+this_file: src_docs/md/troubleshooting.md
+tags: [Troubleshooting]
+---
+
 # Troubleshooting
 
 ## The CLI exits with status 1 and prints nothing

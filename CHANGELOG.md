@@ -913,3 +913,9 @@ Users must adapt to the simplified API and configuration. The tool now focuses e
 - Updated README Python API example to reflect the current helper functions.
 - Introduced WORK.md to document manual test results.
 - README highlights running tests via `uvx hatch run test`.
+
+## 2026-10-18: documentation plugins
+
+- Use MaterialX search, inherited metadata and a topic index; keep ordered navigation in awesome-nav.
+- The documentation wrapper installs the plugins required by this site.
+- Strict documentation build and rendered output checks passed.

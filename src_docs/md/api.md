@@ -1,3 +1,8 @@
+---
+this_file: src_docs/md/api.md
+tags: [API]
+---
+
 # Python API
 
 The package exposes a small API. Everything on this page exists in `src/vexy_markliff/` in version 1.3.

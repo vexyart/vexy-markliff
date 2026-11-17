@@ -175,3 +175,9 @@ Could a developer rewrite this in a weekend? **YES** - we're at the right comple
 ## Summary: Phase 1 = MASSIVE SUCCESS 🎉
 
 The test cleanup phase achieved **97% reduction in test files** while maintaining 100% core functionality. This is a perfect example of how eliminating enterprise bloat results in a lean, focused, maintainable tool that does exactly what users need.
+
+## 2026-10-18: documentation plugins
+
+- Use MaterialX search, inherited metadata and a topic index; keep ordered navigation in awesome-nav.
+- The documentation wrapper installs the plugins required by this site.
+- Strict documentation build and rendered output checks passed.

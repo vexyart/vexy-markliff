@@ -45,22 +45,7 @@ markdown_extensions:
   - pymdownx.tabbed: {alternate_style: true}
   - pymdownx.tasklist: {custom_checkbox: true}
 plugins:
-  - search
-nav:
-  - Home: index.md
-  - Installation: installation.md
-  - Quick start: quickstart.md
-  - Command line: cli.md
-  - Python API: api.md
-  - XLIFF output: output-format.md
-  - Architecture: architecture.md
-  - Troubleshooting: troubleshooting.md
-  - Contributing: contributing.md
-  - Design notes:
-      - Overview: design/index.md
-      - XLIFF 2.1 primer: design/xliff-primer.md
-      - HTML mapping rules: design/html-rules.md
-      - Markdown mapping rules: design/markdown-rules.md
-      - Sentence segmentation: design/segmentation.md
-      - Libraries and tools: design/tools.md
-      - Sample files: design/samples.md
+  - materialx/meta
+  - materialx/tags
+  - awesome-nav
+  - materialx/search

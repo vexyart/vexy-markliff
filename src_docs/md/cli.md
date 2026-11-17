@@ -1,3 +1,8 @@
+---
+this_file: src_docs/md/cli.md
+tags: [Command line]
+---
+
 # Command line
 
 The `vexy-markliff` command is a [Fire](https://github.com/google/python-fire) front end to the `VexyMarkliffCLI` class in `vexy_markliff/cli.py`. It has four commands. Each reads one file and writes one file.
