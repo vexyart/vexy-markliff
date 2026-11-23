@@ -221,7 +221,9 @@ python -m pytest -xvs
 
 Full documentation: https://vexy.dev/vexy-markliff/
 
-The sources are in `src_docs/md/` (build with `src_docs/build.sh`). The design notes that used to live in `docs/` (HTML and Markdown mapping rules, the XLIFF primer, segmentation research) are now in the [Design notes](https://vexy.dev/vexy-markliff/design/) section.
+Edit the sources in `src_docs/md/` and run `./build.sh docs` to rebuild `docs/` in strict mode. The site uses fly-january 0.1.1 with `chrome: none`.
+
+The [design notes](https://vexy.dev/vexy-markliff/design/) cover HTML and Markdown mapping rules, XLIFF and segmentation.
 
 ## Contributing
 

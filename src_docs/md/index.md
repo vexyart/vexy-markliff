@@ -1,4 +1,4 @@
-# vexy-markliff
+# vexy-markliff {data-toc-label="Markliff"}
 
 `vexy-markliff` converts Markdown and HTML documents into XLIFF files that translators can work on, and converts those XLIFF files back into text. It ships as a Python package with a command-line tool of the same name.
 

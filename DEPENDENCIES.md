@@ -47,6 +47,10 @@ this_file: DEPENDENCIES.md
 - **ruff** (>=0.9.7): Fast linting and formatting
 - **mypy** (>=1.15.0): Type checking
 
+### Documentation
+
+`src_docs/build.sh` installs fly-january 0.1.1 with `uvx` for the ProperDocs site build.
+
 ## Optimization Opportunities
 
 ### Phase 2 Reduction Candidates:

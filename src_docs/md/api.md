@@ -20,7 +20,7 @@ The package exposes a small API. Everything on this page exists in `src/vexy_mar
 
 `ConversionConfig` and `VexyMarkliffCLI` are imported on first access through a module-level `__getattr__`, so `import vexy_markliff` stays fast. If `__version__.py` is missing, `__version__` is `"unknown"`.
 
-## `VexyMarkliff`
+## `VexyMarkliff` {data-toc-label="Converter class"}
 
 ```python
 from vexy_markliff import VexyMarkliff

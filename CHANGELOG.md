@@ -6,6 +6,8 @@ this_file: CHANGELOG.md
 
 ## Unreleased
 
+- Site now uses the fly-january 0.1.1 theme (chrome: none)
+
 ### ⚠️ BREAKING: Ultimate Simplification - Phase 1 Complete (2025-09-23) 🚀
 
 This release represents a complete architectural overhaul focused on eliminating enterprise bloat and returning to core functionality.

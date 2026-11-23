@@ -181,3 +181,9 @@ The test cleanup phase achieved **97% reduction in test files** while maintainin
 - Use MaterialX search, inherited metadata and a topic index; keep ordered navigation in awesome-nav.
 - The documentation wrapper installs the plugins required by this site.
 - Strict documentation build and rendered output checks passed.
+
+## 2026-11-24 documentation theme
+
+`./build.sh docs` rebuilt all 18 HTML pages with fly-january 0.1.1 and zero warnings. Static checks verified Fly assets, unbranded navigation and the default MaterialX favicon on every page. The search index contains 138 entries and the tag index covers 17 pages.
+
+`uv run --locked --python 3.13 --extra test python -m pytest tests/` passed all 52 tests.

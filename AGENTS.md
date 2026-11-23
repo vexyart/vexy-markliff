@@ -224,12 +224,7 @@ python -m pytest -xvs
 
 ## Documentation
 
-Full documentation is available in the `docs/` folder:
-
-- `500-intro.md` - Introduction to HTML-XLIFF handling
-- `510-512-prefs-html*.md` - HTML element handling specifications
-- `513-prefs-md.md` - Markdown element handling specifications
-- `530-vexy-markliff-spec.md` - Complete technical specification
+Edit pages in `src_docs/md/` and configure the site in `src_docs/mkdocs.yml`. Keep `extra.fly.chrome` set to `none` for this unofficial site. Run `./build.sh docs` to build with fly-january 0.1.1 in strict mode and refresh the tracked `docs/` output.
 
 ## Contributing
 
