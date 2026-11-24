@@ -6,6 +6,7 @@ this_file: CHANGELOG.md
 
 ## Unreleased
 
+- The documentation site now uses fly-january 0.4.0 or later (remote theme assets).
 - Documentation builds now use fly-january 0.3.0 or later.
 - Site now uses the fly-january 0.2.1 theme (chrome: none)
 - Corrected the release guide to match the Trusted Publishing workflow introduced in `38f8173`. The PyPI project owner must configure `vexy-markliff` to trust GitHub repository `vexyart/vexy-markliff`, workflow `release.yml`, environment `pypi`.
