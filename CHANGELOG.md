@@ -6,7 +6,7 @@ this_file: CHANGELOG.md
 
 ## Unreleased
 
-- Site now uses the fly-january 0.1.1 theme (chrome: none)
+- Site now uses the fly-january 0.2.1 theme (chrome: none)
 
 ### ⚠️ BREAKING: Ultimate Simplification - Phase 1 Complete (2025-09-23) 🚀
 

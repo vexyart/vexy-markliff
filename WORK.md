@@ -187,3 +187,7 @@ The test cleanup phase achieved **97% reduction in test files** while maintainin
 `./build.sh docs` rebuilt all 18 HTML pages with fly-january 0.1.1 and zero warnings. Static checks verified Fly assets, unbranded navigation and the default MaterialX favicon on every page. The search index contains 138 entries and the tag index covers 17 pages.
 
 `uv run --locked --python 3.13 --extra test python -m pytest tests/` passed all 52 tests.
+
+## Documentation theme update
+
+The site uses fly-january 0.2.1.

@@ -49,7 +49,7 @@ this_file: DEPENDENCIES.md
 
 ### Documentation
 
-`src_docs/build.sh` installs fly-january 0.1.1 with `uvx` for the ProperDocs site build.
+`src_docs/build.sh` installs fly-january 0.2.1 with `uvx` for the ProperDocs site build.
 
 ## Optimization Opportunities
 

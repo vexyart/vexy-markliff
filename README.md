@@ -221,7 +221,7 @@ python -m pytest -xvs
 
 Full documentation: https://vexy.dev/vexy-markliff/
 
-Edit the sources in `src_docs/md/` and run `./build.sh docs` to rebuild `docs/` in strict mode. The site uses fly-january 0.1.1 with `chrome: none`.
+Edit the sources in `src_docs/md/` and run `./build.sh docs` to rebuild `docs/` in strict mode. The site uses fly-january 0.2.1 with `chrome: none`.
 
 The [design notes](https://vexy.dev/vexy-markliff/design/) cover HTML and Markdown mapping rules, XLIFF and segmentation.
 
