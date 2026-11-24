@@ -7,6 +7,21 @@ this_file: CHANGELOG.md
 ## Unreleased
 
 - Site now uses the fly-january 0.2.1 theme (chrome: none)
+- Corrected the release guide to match the Trusted Publishing workflow introduced in `38f8173`. The PyPI project owner must configure `vexy-markliff` to trust GitHub repository `vexyart/vexy-markliff`, workflow `release.yml`, environment `pypi`.
+
+### Verified items from the simplification plan
+
+- The CLI exposes four conversion commands in 121 lines. All four ran on sample files through the installed entry point (`1831c68`, `tests/test_cli_enhanced.py`).
+- Missing files and failed conversions exit with status 1 (`tests/test_cli_errors.py`, 57 lines). The CLI command tests fit in 116 lines.
+- Configuration now uses one 55-line class with English and Spanish defaults, a sentence-splitting setting and explicit YAML loading (`1831c68`, `tests/test_config.py`, 76 lines).
+- The three XLIFF data models fit in 176 lines and have a 128-line model test module. The superseded document-pair model and format-style module are absent from the tracked source tree (`45aa8a2`, `tests/test_xliff_models.py`).
+- The exception hierarchy fits in 38 lines and retains its base error and subclasses (`45aa8a2`, `tests/test_exceptions.py`).
+- Shared utilities use standard-library logging and fit in 86 lines (`45aa8a2`, `src/vexy_markliff/utils.py`).
+- Markdown and HTML each have a file-based round-trip smoke test (`tests/test_roundtrip.py`). Both conversion pairs also returned the sample heading text through the installed CLI.
+- The configured suite ran in under ten seconds (52 tests passed in 0.68 seconds with coverage on Python 3.13).
+- The source and test trees meet the size goals. At `3d7e607`, `git ls-files` and `wc -l` counted ten tracked source modules, eight test modules plus `conftest.py`, and 2,385 lines combined.
+- The installation, CLI and architecture guides document the simplified package (`0bc7bc9`). The breaking changes are recorded in the Phase 1 notes (`45aa8a2`).
+- The design notes specify the one-document storage choices and two-document alignment requested in issue 103 (`0bc7bc9`, `src_docs/md/design/index.md`). Their implementation remains on the plan.
 
 ### ⚠️ BREAKING: Ultimate Simplification - Phase 1 Complete (2025-09-23) 🚀
 

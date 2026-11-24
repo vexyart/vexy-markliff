@@ -87,9 +87,9 @@ The `Docs` GitHub workflow runs the same build on every push to `main` that touc
 
 ## Release
 
-Releases are tagged `vX.Y.Z`. `publish.sh` runs `gitnextver` to commit and tag the next version, builds the package from that tag and uploads it with `uv publish`. It needs a PyPI token in `UV_PUBLISH_TOKEN`.
+Run `./publish.sh` to request the next patch release, or pass an explicit tag such as `./publish.sh v1.4.0`. The script dispatches `release.yml` on the remote default branch. Pushing a `vX.Y.Z` tag also triggers the workflow.
 
-The `Release` workflow also builds and uploads to PyPI when a `v*` tag is pushed. It sets `skip-existing: true`, so it does not fail when `publish.sh` already uploaded the same version.
+GitHub Actions builds the wheel and source distribution from the tag, creates the GitHub release and uploads both files to PyPI through Trusted Publishing (OIDC). Configure the PyPI project's trusted publisher with repository `vexyart/vexy-markliff`, workflow `release.yml` and environment `pypi`.
 
 ## Guidelines
 
